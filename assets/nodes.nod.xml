@@ -1,15 +1,15 @@
 
 <nodes>
-    <node id="A" x="50" y="200" type="priority"/>
-    <node id="B" x="150" y="200" type="priority"/>
-    <node id="C" x="0" y="150" type="priority"/>
-    <node id="D" x="50" y="150" type="priority"/>
-    <node id="E" x="150" y="150" type="priority"/>
-    <node id="F" x="200" y="150" type="priority"/>
-    <node id="G" x="0" y="50" type="priority"/>
-    <node id="H" x="50" y="50" type="priority"/>
-    <node id="I" x="150" y="50" type="priority"/>
-    <node id="J" x="200" y="50" type="priority"/>
-    <node id="K" x="50" y="0" type="priority"/>
-    <node id="L" x="150" y="0" type="priority"/>
+    <node id="A" x="50" y="200" type="traffic_light"/>
+    <node id="B" x="150" y="200" type="traffic_light"/>
+    <node id="C" x="0" y="150" type="traffic_light"/>
+    <node id="D" x="50" y="150" type="traffic_light"/>
+    <node id="E" x="150" y="150" type="traffic_light"/>
+    <node id="F" x="200" y="150" type="traffic_light"/>
+    <node id="G" x="0" y="50" type="traffic_light"/>
+    <node id="H" x="50" y="50" type="traffic_light"/>
+    <node id="I" x="150" y="50" type="traffic_light"/>
+    <node id="J" x="200" y="50" type="traffic_light"/>
+    <node id="K" x="50" y="0" type="traffic_light"/>
+    <node id="L" x="150" y="0" type="traffic_light"/>
 </nodes>

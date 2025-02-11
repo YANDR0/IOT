@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-02-11 10:55:41.407137 by randomTrips.py v1_21_0+0000-d7b3b481c43
+<!-- generated on 2025-02-11 17:00:20.605514 by randomTrips.py v1_21_0+0000-d7b3b481c43
 <configuration>
     <net-file value="assets/network.net.xml"/>
     <output-trip-file value="assets/traffic.trips.xml"/>
