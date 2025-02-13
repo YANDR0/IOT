@@ -51,31 +51,32 @@ class SumoSimulation():
 class LightsFunctions():
 
     def __init__(self):
-        self.colorToguether = True
-        self.phases = 2
+        self.simulationSteps = 250  #
+        self.colorToguether = True  #Parámetros están juntos por color o por semáforo
+        self.phases = 2     # Cuales ciclos duran igual
+        # (Todos igual) () (Verde, Rojo y Amarillo) (Verde, Rojo, Amarillo1, Amarillo2)
 
-    @staticmethod
-    # x es la lista con los tiempos de todos los semáforos, las opciones son: 
-    # Todos los verdes, rojos y amarillos juntos, 1r, 2r, 3r...
-    # Todo lo de un semáforo junto, verde, rojo, amarillo, verde, rojo, amarillo, ...
-    # O si permitir de 2 a 4, ocupo funciones distintas lastimosamente
-    def all_lights(x):      
+    def all_lights(self, x):      
         SUMO = SumoSimulation("assets/simulation.sumocfg")
         SUMO.start_simulation(False)
 
         tl = traci.trafficlight.getIDList()
+        tl_dict = {i:[] for i in tl}
+        
         for i in range(len(x)):
             pass
             #phases
 
         '''
-        phases_sem1 = [traci.trafficlight.Phase(20, "GrGr"),  
+        phases_sem1 = [
+            traci.trafficlight.Phase(20, "GrGr"),  
             traci.trafficlight.Phase(5, "yryr"),   
             traci.trafficlight.Phase(20, "rGrG"),  
             traci.trafficlight.Phase(5, "ryry")]
 
         traci.trafficlight.setProgramLogic("sem1", traci.trafficlight.Logic("prog1", 0, 0, phases_sem1))
         '''
+        return SUMO.run_simulation(self.simulationSteps)
 
 
 def probar():
