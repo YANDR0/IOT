@@ -3,22 +3,28 @@ import traci
 from os import path
 from enum import Enum
 
+
 class SimulationState(Enum):
     CANNOT_START = 0
     CAN_START = 1
     CAN_RUN = 2
     RUNNING = 3
 
+
 class SumoSimulation:
     def __init__(self, configuration: str):
         self.sumo_configuration = configuration
-        self.step = SimulationState.CAN_START if path.exists(configuration) else SimulationState.CANNOT_START
+        self.step = (
+            SimulationState.CAN_START
+            if path.exists(configuration)
+            else SimulationState.CANNOT_START
+        )
 
     def generate_files(self, nodes: str, edges: str, random: str) -> None:
         commands = [
             f"netconvert --node-files {nodes} --edge-files {edges} --tls.guess true --output-file=./assets/network.net.xml",
             f"python {random} -n ./assets/network.net.xml -o ./assets/traffic.trips.xml --fringe-factor 50",
-            "duarouter -n ./assets/network.net.xml -t ./assets/traffic.trips.xml -o ./assets/traffic.rou.xml"
+            "duarouter -n ./assets/network.net.xml -t ./assets/traffic.trips.xml -o ./assets/traffic.rou.xml",
         ]
 
         for cmd in commands:
@@ -29,7 +35,7 @@ class SumoSimulation:
     def start_simulation(self, visual: bool) -> None:
         if self.step.value < SimulationState.CAN_START.value:
             return
-        
+
         cmd = ["sumo-gui" if visual else "sumo", "-c", self.sumo_configuration]
         traci.start(cmd)
         self.step = SimulationState.CAN_RUN
@@ -39,7 +45,13 @@ class SumoSimulation:
             return {}
 
         self.step = SimulationState.RUNNING
-        total_ends, total_starts, total_wait_time, total_speed, total_vehicles = 0, 0, 0, 0, 0
+        total_ends, total_starts, total_wait_time, total_speed, total_vehicles = (
+            0,
+            0,
+            0,
+            0,
+            0,
+        )
 
         for _ in range(steps):
             traci.simulationStep()
@@ -54,8 +66,10 @@ class SumoSimulation:
 
         return {
             "traffic_flow": total_ends / total_starts if total_starts else 0.0,
-            "avg_wait_time": total_wait_time / total_vehicles if total_vehicles else 0.0,
-            "avg_speed": total_speed / total_vehicles if total_vehicles else 0.0
+            "avg_wait_time": total_wait_time / total_vehicles
+            if total_vehicles
+            else 0.0,
+            "avg_speed": total_speed / total_vehicles if total_vehicles else 0.0,
         }
 
     def end_simulation(self) -> None:
