@@ -64,13 +64,13 @@ class HillClimbing:
 
     def optimizeRange(self, n): 
         x = VectorOperations.ramdomRange(self.xLow, self.xHigh)
-        y = self.func(x, self.dim)
+        y = self.func(x)
         Dx = self.getDx(0)
         dx = HillClimbing.ranIncrement(Dx)
 
         for _ in range(n):
             tempX = VectorOperations.sumVector(x, dx)
-            tempY = self.func(tempX, self.dim)
+            tempY = self.func(tempX)
             if(tempY < y):
                 x = tempX
                 y = tempY
@@ -108,7 +108,7 @@ class Particle:
         self.x = VectorOperations.ramdomRange(Swarm.xLow, Swarm.xHigh)
         self.v = [random()*2-1 for _ in range(Swarm.dim)]
         self.bestX = self.x
-        self.bestY = Swarm.func(self.x, Swarm.dim)
+        self.bestY = Swarm.func(self.x)
 
         # Check if new position is a best
         if(not Swarm.BestY or self.bestY < Swarm.BestY): 
@@ -132,7 +132,7 @@ class Particle:
             self.x[i] = currSpeed[i] + self.x[i]
 
         # Revisar si la nueva posición es un mínimo
-        y = Swarm.func(self.x, Swarm.dim)
+        y = Swarm.func(self.x)
         if(y >= self.bestY): return
         self.bestY = y
         self.bestX = self.x
@@ -164,7 +164,7 @@ def randomMin(func, xLow, xHigh, n):
     
     for i in range(n):
         x = VectorOperations.ramdomRange(xLow, xHigh)
-        num = func(x, dim)
+        num = func(x)
         xMin = x if num < yMin else xMin
         yMin = min(num, yMin)
 
