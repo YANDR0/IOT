@@ -77,3 +77,19 @@ class SumoSimulation:
             return
         traci.close()
         self.step = SimulationState.CAN_START
+
+    def get_lights(self):
+        if self.step.value < SimulationState.RUNNING.value:
+            return
+        
+        trafficlight_ids = traci.trafficlight.getIDList()
+        tl_dict = {}
+        total_phases = 0
+        for tl in trafficlight_ids:
+            logic = traci.trafficlight.getAllProgramLogics(tl)[0]
+            tl_dict[tl] = [p for p in logic.phases]
+            total_phases += len(tl_dict[tl])
+
+        return tl_dict, total_phases
+
+        

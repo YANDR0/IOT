@@ -6,28 +6,28 @@ from time import time
 ### Test functions ###
 
 
-def rosenbrock(x, dim):
+def rosenbrock(x, dim = 2):
     fx = 0
     for i in range(dim - 1):
         fx += 100 * pow(x[i + 1] - x[i] * x[i], 2) + pow(1 - x[i], 2)
     return fx
 
 
-def rastrigin(x, dim):
+def rastrigin(x, dim = 2):
     fx = 0
     for i in range(dim):
         fx += x[i] * x[i] - 10 * cos(2 * pi * x[0])
     return 10 * dim + fx
 
 
-def styblinski(x, dim):
+def styblinski(x, dim = 2):
     fx = 0
     for i in range(dim):
         fx += pow(x[i], 4) - 16 * pow(x[i], 2) + 5 * x[i]
     return fx / 2
 
 
-def ackley(x, dim):
+def ackley(x, dim = 2):
     sum1 = 0
     sum2 = 0
     for i in range(dim):
