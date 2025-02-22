@@ -34,7 +34,6 @@ class LightsFunctions:
                 new_phases.append(traci.trafficlight.Phase(x[i], phase))
                 i += 1
 
-            print("AAAAA---")
             logic = traci.trafficlight.Logic(key, 0, 0, new_phases)
             traci.trafficlight.setProgramLogic(key, logic)
             traci.trafficlight.setProgram(key, key)

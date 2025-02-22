@@ -18,9 +18,9 @@ def ejemplo_semaforo() -> None:
     x_low, x_high = lights_function.get_min_max(5, 150)
 
     y = probar()
-    x1, y1 = randomMin(lights_function.all_lights, x_low, x_high, 100)
-    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 100)
-    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 100, 1000)
+    x1, y1 = randomMin(lights_function.all_lights, x_low, x_high, 10)
+    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 10)
+    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 2, 5)
 
     print(y, y1, y2, s.BestY)
 

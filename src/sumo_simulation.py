@@ -87,7 +87,7 @@ class SumoSimulation:
         total_phases = 0
         for tl in trafficlight_ids:
             logic = traci.trafficlight.getAllProgramLogics(tl)[0]
-            tl_dict[tl] = [p for p in logic.phases]
+            tl_dict[tl] = [p.state for p in logic.phases]
             total_phases += len(tl_dict[tl])
 
         return tl_dict, total_phases
