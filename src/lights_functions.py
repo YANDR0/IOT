@@ -1,19 +1,29 @@
-import traci
+import traci, pickle
 from sumo_simulation import SumoSimulation
 
 
 class LightsFunctions:
 
-    def __init__(self, steps: int = 100):
+    def __init__(self, steps: int = 100, function = "default"):
         self.simulation_steps = steps
         self.lights = None
         self.phases_number = 0
-
+        self.function = function
+        self.file = open(f"./data/{function}.pkl", "ab") 
+            
         SUMO = SumoSimulation("assets/simulation.sumocfg")
         SUMO.start_simulation(False)
         self.get_ligths_phases(SUMO)
         SUMO.end_simulation()
-        
+
+    def change_parameters(self, function):
+        self.file.close()
+        self.function = function
+        self.file = open(f"./data/{function}.pkl", "ab")     
+
+    def write_data(self, data):
+        pickle.dump(data, self.file)
+
     def get_ligths_phases(self, simulation: SumoSimulation):
         simulation.run_simulation(0)
         self.lights, self.phases_number = simulation.get_lights()
@@ -38,6 +48,10 @@ class LightsFunctions:
             traci.trafficlight.setProgramLogic(key, logic)
             traci.trafficlight.setProgram(key, key)
 
-        y = SUMO.run_simulation(self.simulation_steps)["traffic_flow"]
+        data = SUMO.run_simulation(self.simulation_steps)
         SUMO.end_simulation()
+
+        data["x"] = x
+        self.write_data(data)
+        y = data["traffic_flow"]
         return 1 - y
