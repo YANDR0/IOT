@@ -70,9 +70,9 @@ class HillClimbing:
     def getDx(self, fitness):
         return [(h - l) * (1 - fitness) for l, h in zip(self.xLow, self.xHigh)]
 
-    def optimizeRange(self, n):
-        x = VectorOperations.ramdomRange(self.xLow, self.xHigh)
-        y = self.func(x)
+    def optimizeRange(self, n, data = None):
+        x = VectorOperations.ramdomRange(self.xLow, self.xHigh) if not data else data['x']
+        y = self.func(x) if not data else data['traffic_flow']
         Dx = self.getDx(0)
         dx = HillClimbing.ranIncrement(Dx)
 
@@ -163,9 +163,13 @@ class Particle:
 
 
 ### Main ###
-def swarm_simulation(func, xLow, xHigh, m, n):
+def swarm_simulation(func, xLow, xHigh, m, n, data):
     swarm = Swarm(func, 0.001, 0.1, 0.1, xLow, xHigh)
     particles = [swarm.createParticle() for _ in range(m)]
+    if(data):
+        swarm.BestX = data['x']
+        swarm.BestY = data['traffic_flow']
+        
     for _ in range(n):
         for p in particles:
             p.updateParticle(swarm)
@@ -173,15 +177,15 @@ def swarm_simulation(func, xLow, xHigh, m, n):
     return swarm
 
 
-def hill_simulation(func, xLow, xHigh, n):
+def hill_simulation(func, xLow, xHigh, n, data):
     hill = HillClimbing(func, xLow, xHigh)
-    return hill.optimizeRange(n)
+    return hill.optimizeRange(n, data)
 
 
-def randomMin(func, xLow, xHigh, n):
-    yMin = float("inf")
+def randomMin(func, xLow, xHigh, n, data):
+    yMin = float("inf") if not data else data['traffic_flow']
     dim = len(xLow)
-    xMin = [0 for _ in range(dim)]
+    xMin = [0 for _ in range(dim)] if not data else data['x']
 
     for i in range(n):
         x = VectorOperations.ramdomRange(xLow, xHigh)
