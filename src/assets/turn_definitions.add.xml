@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<additional>
+  <interval begin="0" end="3600">
+    <edgeRelation from="AD" to="DE" probability="0.7"/>
+    <edgeRelation from="AD" to="DH" probability="0.3"/>
+    <edgeRelation from="CD" to="DA" probability="0.6"/>
+    <edgeRelation from="CD" to="DH" probability="0.4"/>
+  </interval>
+</additional>

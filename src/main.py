@@ -6,7 +6,7 @@ import os, pickle
 VISUAL = False
 
 def probar() -> dict[str, float]:
-    sumo = SumoSimulation("./assets/simulation.sumocfg")
+    sumo = SumoSimulation("./assets/simulation.sumocfg", turn_data="./fieldwork_data.json")
     sumo.start_simulation(VISUAL)
     result = sumo.run_simulation(250)
     sumo.end_simulation()
@@ -48,11 +48,11 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    data = ver_resultados()
-    for k in data:
-        print(k, data[k])
-    #ejemplo_semaforo()
+    #data = ver_resultados()
+    #for k in data:
+    #    print(k, data[k])
+    ejemplo_semaforo()
 
-    data = ver_resultados()
-    for k in data:
-        print(k, data[k])
+    #data = ver_resultados()
+    #for k in data:
+    #    print(k, data[k])

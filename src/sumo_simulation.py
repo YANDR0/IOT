@@ -2,6 +2,7 @@ import subprocess
 import traci
 from os import path
 from enum import Enum
+from convert_field_data import convert_field_data
 
 
 class SimulationState(Enum):
@@ -12,8 +13,10 @@ class SimulationState(Enum):
 
 
 class SumoSimulation:
-    def __init__(self, configuration: str):
+    def __init__(self, configuration: str, turn_data: str = None):
         self.sumo_configuration = configuration
+        self.turn_data = turn_data
+
         self.step = (
             SimulationState.CAN_START
             if path.exists(configuration)
@@ -21,15 +24,16 @@ class SumoSimulation:
         )
 
     def generate_files(self, nodes: str, edges: str, random: str) -> None:
-        commands = [
-            f"netconvert --node-files {nodes} --edge-files {edges} --tls.guess true --output-file=./assets/network.net.xml",
-            f"python {random} -n ./assets/network.net.xml -o ./assets/traffic.trips.xml --fringe-factor 50",
-            "duarouter -n ./assets/network.net.xml -t ./assets/traffic.trips.xml -o ./assets/traffic.rou.xml",
-        ]
-
-        for cmd in commands:
-            subprocess.run(cmd.split())
-
+        # Convertir datos de campo si existen
+        if self.turn_data:
+            convert_field_data(self.turn_data, './assets/turn_definitions.add.xml')
+        
+        comando = f"python {random} -n ./assets/network.net.xml -o ./assets/traffic.trips.xml"
+        if self.turn_data:
+            comando += " --turns ./assets/turn_definitions.add.xml"
+        comando += " --fringe-factor 50"
+        
+        subprocess.run(comando.split())
         self.step = SimulationState.CAN_RUN
 
     def start_simulation(self, visual: bool) -> None:

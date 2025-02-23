@@ -1,0 +1,21 @@
+{
+    "intersection": "D",
+    "observation_period": "2024-03-01 08:00-09:00",
+    "total_vehicles": 150,
+    "directions": [
+        {
+            "from": "AD",
+            "to": [
+                {"edge": "DE", "count": 105, "vehicle_types": {"car": 80, "truck": 20, "bus": 5}},
+                {"edge": "DH", "count": 45, "vehicle_types": {"car": 40, "truck": 5}}
+            ]
+        },
+        {
+            "from": "CD",
+            "to": [
+                {"edge": "DA", "count": 90, "vehicle_types": {"car": 70, "truck": 20}},
+                {"edge": "DH", "count": 60, "vehicle_types": {"car": 50, "truck": 10}}
+            ]
+        }
+    ]
+}
