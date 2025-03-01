@@ -1,4 +1,5 @@
 import json
+import os
 
 class DataWriter:
     
@@ -13,7 +14,6 @@ class DataWriter:
     def read_file(self):
         with open(f"./{self.directory + '/' if self.directory else ''}{self.file_name}.json",'r') as file:
             json_data = json.load(file)
-            print(json_data)
             self.best = json_data['best']
             self.data = json_data['data']
 
@@ -35,6 +35,9 @@ class DataWriter:
         self.data  = []
         self.best = None
         if(directory): self.directory = directory
+        if(os.path.exists(f"./{self.directory + '/' if self.directory else ''}{self.file_name}.json")):
+            try: self.read_file()
+            except: return
 
     def set_best(self):
         for d in self.data:
