@@ -54,6 +54,7 @@ class LightsFunctions:
         return y
 
     ### Acá podemos describir la función de Y, la cosa es que no sé que nos da avg_wait_time o avg_speed
+    # O como normalizarlos en general :v
     @staticmethod
     def get_metrics_function(w1 = 1, w2 = 1, w3 = 1):
-        return lambda data: data["traffic_flow"] * 100
+        return lambda data: (1 - data["traffic_flow"]) * 100
