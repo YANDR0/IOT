@@ -1,28 +1,24 @@
-import traci, pickle
+import traci
 from sumo_simulation import SumoSimulation
+from data_writer import DataWriter
 
 
 class LightsFunctions:
 
-    def __init__(self, steps: int = 100, function = "default"):
+    metric_function = None
+
+    def __init__(self, steps: int = 100, data_writer = None):
+        if(not LightsFunctions.metric_function):
+            LightsFunctions.metric_function = LightsFunctions.get_metrics_function()
         self.simulation_steps = steps
         self.lights = None
         self.phases_number = 0
-        self.function = function
-        self.file = open(f"./data/{function}.pkl", "ab") 
+        self.data_writer: DataWriter = data_writer 
             
         SUMO = SumoSimulation("assets/simulation.sumocfg")
         SUMO.start_simulation(False)
         self.get_ligths_phases(SUMO)
         SUMO.end_simulation()
-
-    def change_parameters(self, function):
-        self.file.close()
-        self.function = function
-        self.file = open(f"./data/{function}.pkl", "ab")     
-
-    def write_data(self, data):
-        pickle.dump(data, self.file)
 
     def get_ligths_phases(self, simulation: SumoSimulation):
         simulation.run_simulation(0)
@@ -51,7 +47,13 @@ class LightsFunctions:
         data = SUMO.run_simulation(self.simulation_steps)
         SUMO.end_simulation()
 
+        y = LightsFunctions.metric_function(data)
         data["x"] = x
-        self.write_data(data)
-        y = data["traffic_flow"]
-        return 1 - y
+        data["y"] = y
+        if(self.data_writer): self.data_writer.add_data(data)
+        return y
+
+    ### Acá podemos describir la función de Y, la cosa es que no sé que nos da avg_wait_time o avg_speed
+    @staticmethod
+    def get_metrics_function(w1 = 1, w2 = 1, w3 = 1):
+        return lambda data: data["traffic_flow"] * 100

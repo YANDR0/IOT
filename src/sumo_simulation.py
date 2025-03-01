@@ -70,9 +70,7 @@ class SumoSimulation:
 
         return {
             "traffic_flow": total_ends / total_starts if total_starts else 0.0,
-            "avg_wait_time": total_wait_time / total_vehicles
-            if total_vehicles
-            else 0.0,
+            "avg_wait_time": total_wait_time / total_vehicles if total_vehicles else 0.0,
             "avg_speed": total_speed / total_vehicles if total_vehicles else 0.0,
         }
 
