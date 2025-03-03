@@ -3,11 +3,10 @@ from lights_functions import LightsFunctions
 from optimization import randomMin, hill_simulation, swarm_simulation
 import os, pickle
 
-VISUAL = False
 
-def probar() -> dict[str, float]:
+def probar(visual: bool) -> dict[str, float]:
     sumo = SumoSimulation("./assets/simulation.sumocfg", turn_data="./fieldwork_data.json")
-    sumo.start_simulation(VISUAL)
+    sumo.start_simulation(visual)
     result = sumo.run_simulation(250)
     sumo.end_simulation()
     return result
@@ -51,8 +50,9 @@ if __name__ == "__main__":
     #data = ver_resultados()
     #for k in data:
     #    print(k, data[k])
-    ejemplo_semaforo()
+    #ejemplo_semaforo()
 
     #data = ver_resultados()
     #for k in data:
     #    print(k, data[k])
+    probar(True)
