@@ -13,9 +13,51 @@ class SimulationState(Enum):
 
 
 class SumoSimulation:
-    def __init__(self, configuration: str, turn_data: str = None):
+
+    @staticmethod
+    def net_from_nod_edg(nodes, edges, dest, ext = True):
+        file = "" if not ext else "/network.net.xml"
+        command = f"netconvert -n {nodes} -e {edges} -o {dest}{file}"
+        subprocess.run(command.split())
+
+    @staticmethod
+    def net_from_osm(open_street, dest, ext = True):
+        file = "" if not ext else "/network.net.xml"
+        command = f"netconvert --osm-files {open_street} -o {dest}{file}"
+        subprocess.run(command.split())
+
+    @staticmethod
+    def trip_from_od(network, matrix, dest, ext = True):
+        file = "" if not ext else "/traffic.trips.xml"
+        command = f"od2trips -n {network} -d {matrix} -o {dest}{file}"
+        subprocess.run(command.split())
+
+    @staticmethod
+    def random_trips(network, random, dest, ext = True):
+        file = "" if not ext else "/traffic.trips.xml"
+        comando = f"python {random} -n {network} -o {dest}{file} --fringe-factor 50"
+        subprocess.run(comando.split())
+
+    @staticmethod
+    def rou_from_trip(network, trips, dest, ext = True):
+        file = "" if not ext else "/routes.rou.xml"
+        command = f"duarouter -n {network} -t {trips} -o {dest}{file}"
+        subprocess.run(command.split())
+
+    @staticmethod
+    def config_from_net_rou(network, routes, dest):
+        config = f"""
+        <configuration>
+            <input>
+                <net-file value="{network}"/>
+                <route-files value="{routes}"/>
+            </input>
+        </configuration>
+        """
+        with open(dest, "w") as f: f.write(config)
+
+    def __init__(self, configuration: str = ""):
         self.sumo_configuration = configuration
-        self.turn_data = turn_data
 
         self.step = (
             SimulationState.CAN_START
@@ -23,17 +65,8 @@ class SumoSimulation:
             else SimulationState.CANNOT_START
         )
 
-    def generate_files(self, nodes: str, edges: str, random: str) -> None:
-        # Convertir datos de campo si existen
-        if self.turn_data:
-            convert_field_data(self.turn_data, './assets/turn_definitions.add.xml')
-        
-        comando = f"python {random} -n ./assets/network.net.xml -o ./assets/traffic.trips.xml"
-        if self.turn_data:
-            comando += " --turns ./assets/turn_definitions.add.xml"
-        comando += " --fringe-factor 50"
-        
-        subprocess.run(comando.split())
+    def set_files(self, config) -> None:
+        self.sumo_configuration = config
         self.step = SimulationState.CAN_RUN
 
     def start_simulation(self, visual: bool) -> None:
