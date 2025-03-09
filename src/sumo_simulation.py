@@ -2,7 +2,6 @@ import subprocess
 import traci
 from os import path
 from enum import Enum
-from convert_field_data import convert_field_data
 
 
 class SimulationState(Enum):
@@ -30,7 +29,7 @@ class SumoSimulation:
 
     @staticmethod
     def trip_from_od(network, matrix, dest, ext = True):
-        file = "" if not ext else "/traffic.trips.xml"
+        file = "" if not ext else "/traffic.trips2.xml"
         command = f"od2trips -n {network} -d {matrix} -o {dest}{file}"
         subprocess.run(command.split())
         return f"{dest}{file}"

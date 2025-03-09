@@ -71,12 +71,15 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    optimice_trafficlights()
+    #optimice_trafficlights()
 
-    config = generate_files()
-    print(config)
-    test_simulation("./assets/simulation.sumocfg", visual=True)
+    #config = generate_files()
+    #print(config)
+    #test_simulation("./assets/simulation.sumocfg", visual=True)
 
     #data = check_data()
     #print(data)
     #show_cases(data)
+
+    #Todo el show de OD
+    SumoSimulation.trip_from_od("./assets/network.net.xml", "./assets/od_matrix.od.xml", "./assets")
