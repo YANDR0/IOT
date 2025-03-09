@@ -73,11 +73,18 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    optimice_trafficlights()
+    #optimice_trafficlights()
+
+    net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
+    rou = SumoSimulation.rou_from_trip(net, "../tonterias/idea.trip.xml", "./assets/ruta.rou.xml", False)
+    config = SumoSimulation.config_from_net_rou(net.split("/")[-1], rou.split("/")[-1], "./assets")
+
+
+
 
     #config = generate_files()
     #print(config)
-    #test_simulation("./assets/simulation.sumocfg")
+    test_simulation("./assets/simulation.sumocfg")
 
     #data = check_data()
     #print(data)
