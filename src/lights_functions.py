@@ -7,15 +7,16 @@ class LightsFunctions:
 
     metric_function = None
 
-    def __init__(self, steps: int = 100, data_writer = None):
+    def __init__(self, file, steps: int = 100, data_writer = None):
         if(not LightsFunctions.metric_function):
             LightsFunctions.metric_function = LightsFunctions.get_metrics_function(20, 1, 20)
         self.simulation_steps = steps
         self.lights = None
         self.phases_number = 0
         self.data_writer: DataWriter = data_writer 
+        self.file = file
             
-        SUMO = SumoSimulation("assets/simulation.sumocfg")
+        SUMO = SumoSimulation(self.file)
         SUMO.start_simulation(False)
         self.get_ligths_phases(SUMO)
         SUMO.end_simulation()
@@ -28,7 +29,7 @@ class LightsFunctions:
         return [min_time for _ in range(self.phases_number)], [max_time for _ in range(self.phases_number)]
 
     def all_lights(self, x, visual = False):
-        SUMO = SumoSimulation("assets/simulation.sumocfg")
+        SUMO = SumoSimulation(self.file)
         SUMO.start_simulation(visual)
         if(not self.lights):
             self.get_ligths_phases(SUMO)

@@ -4,7 +4,7 @@ from optimization import randomMin, hill_simulation, swarm_simulation
 from data_writer import DataWriter
 import os
 
-VISUAL = False
+VISUAL = True
 
 def generate_files():
     net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
@@ -23,42 +23,66 @@ def test_simulation(config, steps = 250) -> dict[str, float]:
 def optimice_trafficlights(data = None) -> None:
 
     data_writer = DataWriter('default','data')
-    lights_function = LightsFunctions(steps=100, data_writer=data_writer)
+    lights_function = LightsFunctions("./assets/simulation.sumocfg", steps=100, data_writer=data_writer)
     x_low, x_high = lights_function.get_min_max(5, 150)
 
     data_writer.change_file('random')
-    x1, y1 = randomMin(lights_function.all_lights, x_low, x_high, 5, data["random"] if data else None)
+    x1, y1 = randomMin(lights_function.all_lights, x_low, x_high, 1000, data["random"] if data else None)
     data_writer.change_file('hill')
-    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 5, data["hill"] if data else None)
+    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 1000, data["hill"] if data else None)
     data_writer.change_file('swarm')
-    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 1, 5, data["swarm"] if data else None)
+    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 5, 200, data["swarm"] if data else None)
     data_writer.write_file()
 
 def check_data():
     data_writer = DataWriter('default','data')  
+    data = {}
 
     data_writer.change_file('random')
     data_writer.read_file()
-    print(data_writer.best)
+    data['random'] = data_writer.best
 
     data_writer.change_file('hill')
     data_writer.read_file()
-    print(data_writer.best)
+    data['hill'] = data_writer.best
 
     data_writer.change_file('swarm')
     data_writer.read_file()
-    print(data_writer.best)
+    data['swarm'] = data_writer.best
 
-    print(data_writer.data)
-        
+    return data
+
+def show_cases(data):
+    simulation = LightsFunctions("./assets/simulation.sumocfg", 100)
+
+    test_simulation("./assets/simulation.sumocfg", 100)
+
+    print("random")
+    simulation.all_lights(data['random']['x'], True)
+
+    print("hill")
+    simulation.all_lights(data['hill']['x'], True)
+
+    print("swarm")
+    simulation.all_lights(data['swarm']['x'], True)
+
+
+
 if __name__ == "__main__":
     # Cambiar al directorio del script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    config = generate_files()
+    optimice_trafficlights()
+
+    #config = generate_files()
     #print(config)
     #test_simulation("./assets/simulation.sumocfg")
+
+    #data = check_data()
+    #print(data)
+    #show_cases(data)
+
 
 
 
