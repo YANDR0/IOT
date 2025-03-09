@@ -19,33 +19,39 @@ class SumoSimulation:
         file = "" if not ext else "/network.net.xml"
         command = f"netconvert -n {nodes} -e {edges} -o {dest}{file}"
         subprocess.run(command.split())
+        return f"{dest}{file}"
 
     @staticmethod
     def net_from_osm(open_street, dest, ext = True):
         file = "" if not ext else "/network.net.xml"
         command = f"netconvert --osm-files {open_street} -o {dest}{file}"
         subprocess.run(command.split())
+        return f"{dest}{file}"
 
     @staticmethod
     def trip_from_od(network, matrix, dest, ext = True):
         file = "" if not ext else "/traffic.trips.xml"
         command = f"od2trips -n {network} -d {matrix} -o {dest}{file}"
         subprocess.run(command.split())
+        return f"{dest}{file}"
 
     @staticmethod
     def random_trips(network, random, dest, ext = True):
         file = "" if not ext else "/traffic.trips.xml"
         comando = f"python {random} -n {network} -o {dest}{file} --fringe-factor 50"
         subprocess.run(comando.split())
+        return f"{dest}{file}"
 
     @staticmethod
     def rou_from_trip(network, trips, dest, ext = True):
         file = "" if not ext else "/routes.rou.xml"
         command = f"duarouter -n {network} -t {trips} -o {dest}{file}"
         subprocess.run(command.split())
+        return f"{dest}{file}"
 
     @staticmethod
-    def config_from_net_rou(network, routes, dest):
+    def config_from_net_rou(network, routes, dest, ext = True):
+        file = "" if not ext else "/simulation.sumocfg"
         config = f"""
         <configuration>
             <input>
@@ -54,7 +60,9 @@ class SumoSimulation:
             </input>
         </configuration>
         """
-        with open(dest, "w") as f: f.write(config)
+        with open(dest + file, "w") as f: f.write(config)
+        return dest + file
+        
 
     def __init__(self, configuration: str = ""):
         self.sumo_configuration = configuration

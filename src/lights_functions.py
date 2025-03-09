@@ -9,7 +9,7 @@ class LightsFunctions:
 
     def __init__(self, steps: int = 100, data_writer = None):
         if(not LightsFunctions.metric_function):
-            LightsFunctions.metric_function = LightsFunctions.get_metrics_function()
+            LightsFunctions.metric_function = LightsFunctions.get_metrics_function(20, 1, 20)
         self.simulation_steps = steps
         self.lights = None
         self.phases_number = 0
@@ -27,9 +27,9 @@ class LightsFunctions:
     def get_min_max(self, min_time, max_time):
         return [min_time for _ in range(self.phases_number)], [max_time for _ in range(self.phases_number)]
 
-    def all_lights(self, x):
+    def all_lights(self, x, visual = False):
         SUMO = SumoSimulation("assets/simulation.sumocfg")
-        SUMO.start_simulation(False)
+        SUMO.start_simulation(visual)
         if(not self.lights):
             self.get_ligths_phases(SUMO)
 
@@ -57,4 +57,4 @@ class LightsFunctions:
     # O como normalizarlos en general :v
     @staticmethod
     def get_metrics_function(w1 = 1, w2 = 1, w3 = 1):
-        return lambda data: (1 - data["traffic_flow"]) * 100
+        return lambda data: (1 - data["traffic_flow"]) * w1 + data["avg_wait_time"] * w2 + (1/data["avg_speed"]) * w3
