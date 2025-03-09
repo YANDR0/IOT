@@ -1,8 +1,8 @@
 
         <configuration>
             <input>
-                <net-file value="network.net.xml"/>
-                <route-files value="routes.rou.xml"/>
+                <net-file value="red_hidalgo-federalismo.net.xml"/>
+                <route-files value="hf.trips.xml"/>
             </input>
         </configuration>
         

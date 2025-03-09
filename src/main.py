@@ -4,8 +4,6 @@ from optimization import randomMin, hill_simulation, swarm_simulation
 from data_writer import DataWriter
 import os
 
-VISUAL = True
-
 def generate_files():
     net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
     trips = SumoSimulation.random_trips(net, "./assets/randomTrips.py", "./assets")
@@ -13,9 +11,9 @@ def generate_files():
     config = SumoSimulation.config_from_net_rou(net.split("/")[-1], rou.split("/")[-1], "./assets")
     return config
 
-def test_simulation(config, steps = 250) -> dict[str, float]:
+def test_simulation(config, steps = 250, visual = False) -> dict[str, float]:
     sumo = SumoSimulation(config)
-    sumo.start_simulation(VISUAL)
+    sumo.start_simulation(visual)
     result = sumo.run_simulation(steps)
     sumo.end_simulation()
     return result
@@ -75,15 +73,10 @@ if __name__ == "__main__":
 
     optimice_trafficlights()
 
-    #config = generate_files()
-    #print(config)
-    #test_simulation("./assets/simulation.sumocfg")
+    config = generate_files()
+    print(config)
+    test_simulation("./assets/simulation.sumocfg", visual=True)
 
     #data = check_data()
     #print(data)
     #show_cases(data)
-
-
-
-
-
