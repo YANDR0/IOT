@@ -24,6 +24,11 @@ class DataWriter:
             data = {'best': self.best, 'data': self.data}
             json.dump(data, file)
 
+    def overwrite_best(self):
+        with open(f"./{self.directory + '/' if self.directory else ''}{self.file_name}.json",'w') as file:
+            data = {'best': self.best, 'data': []}
+            json.dump(data, file)
+
     def add_data(self, data):
         self.data.append(data)
         if(not self.best or data['y'] < self.best['y']):
