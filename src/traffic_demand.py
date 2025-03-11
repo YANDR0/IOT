@@ -1,46 +1,71 @@
 
-from random import randint, choice
-
-def match_traffic(traffic_1: dict, traffic_2: dict):
-    in_sum = sum(traffic_1.values())
-    out_sum = sum(traffic_2.values())
-    diff = in_sum - out_sum
-
-    to_change = traffic_1 if diff > 0 else traffic_2
-    diff = abs(diff)
-
-    while(diff) > 0:
-        pass
-    ### Ya no supe, jaja
+from random import randint
 
 
-def traffic_demand(incoming_traffic: dict, outgoing_traffic: dict):
-    #match_traffic(incoming_traffic, outgoing_traffic)
-    print()
+class TrafficDemand:
 
-    traffic = []
-    in_sum = sum(incoming_traffic.values())
-    proportions = { id: cars/in_sum for id, cars in outgoing_traffic.items() }
-    
-    leftovers = 0
-    for i, total in incoming_traffic.items():
-        for j, ratio in proportions.items():
-            n = total*ratio-leftovers
-            cars = round(n)
-            leftovers = cars - n
-            traffic.append((i, j, cars))
+    @staticmethod
+    def match_traffic(traffic_1: dict, traffic_2: dict):
+        in_sum = sum(traffic_1.values())
+        out_sum = sum(traffic_2.values())
+        diff = in_sum - out_sum
 
-    return traffic
+        if(diff == 0): return
 
+        traffic_to_change = traffic_1 if diff < 0 else traffic_2
+        sum_change = in_sum if diff < 0 else out_sum
+        diff = abs(diff)
+        initial_diff = diff
 
+        leftovers = 0
 
+        while(diff) > 0:
+            for k in traffic_to_change:
+                n = initial_diff*(traffic_to_change[k]/sum_change)-leftovers
+                cars = round(n)
+                leftovers = cars - n
+                traffic_to_change[k] += cars
+                diff -= cars
 
-#def random_traffic_demand(incoming_traffic: dict, outgoing_traffic: dict):
+    @staticmethod
+    def traffic_demand(incoming_traffic: dict, outgoing_traffic: dict):
+        TrafficDemand.match_traffic(incoming_traffic, outgoing_traffic)
+        traffic = []
+        in_sum = sum(incoming_traffic.values())
+        
+        leftovers = 0
+        for i, total_in in incoming_traffic.items():
+            for j, total_out in outgoing_traffic.items():
+                n = total_in*(total_out/in_sum)-leftovers
+                cars = round(n)
+                leftovers = cars - n
+                traffic.append((i, j, cars))
 
+        return traffic
 
-a = {'a': 10, 'b': 10, 'c': 20}
-b = {'d': 15, 'e': 17, 'f': 8}
+    @staticmethod
+    def random_traffic_demand(incoming_traffic: dict, outgoing_traffic: dict):
+        TrafficDemand.match_traffic(incoming_traffic, outgoing_traffic)
+        traffic = []
+        out_list = [k for k in outgoing_traffic]
 
-c = traffic_demand(a, b)
-for i in c:
-    print(i)
+        for in_k in incoming_traffic:
+            values = dict()
+
+            while(incoming_traffic[in_k] > 0):
+                i = randint(0, len(out_list)-1)
+                out_key = out_list[i]
+                cars = randint(1, min(incoming_traffic[in_k], outgoing_traffic[out_key]))
+
+                incoming_traffic[in_k] -= cars
+                outgoing_traffic[out_key] -= cars
+                values[out_key] = cars + (values.get(out_key) or 0)
+
+                if(outgoing_traffic[out_key] == 0):
+                    out_list[i] = out_list[-1]
+                    out_list.pop()
+            
+            for out_key in values:
+                traffic.append((in_k, out_key, values[out_key]))
+
+        return traffic

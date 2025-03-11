@@ -1,10 +1,8 @@
 $OR;D2
-* From-Time  To-Time
-0.00 1.00
+* From-Time  To-Time    hours.minutes
+0.0 0.01
 * Factor
 1.00
-* some
-* additional
-* comments
-         A          B       10.00
+* Matrix
+A B 10.00
 

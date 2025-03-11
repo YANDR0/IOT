@@ -2,8 +2,7 @@ import subprocess
 import traci
 from os import path
 from enum import Enum
-from convert_field_data import convert_field_data
-
+#print(os.path.basename(your_path))
 
 class SimulationState(Enum):
     CANNOT_START = 0
@@ -15,43 +14,49 @@ class SimulationState(Enum):
 class SumoSimulation:
 
     @staticmethod
-    def net_from_nod_edg(nodes, edges, dest, ext = True):
-        file = "" if not ext else "/network.net.xml"
-        command = f"netconvert -n {nodes} -e {edges} -o {dest}{file}"
+    def net_from_nod_edg(nodes, edges, dest):
+        if('.' not in path.basename(dest)): 
+            dest = path.join(dest, "network.net.xml")
+        command = f"netconvert -n {nodes} -e {edges} -o {dest}"
         subprocess.run(command.split())
-        return f"{dest}{file}"
+        return dest
 
     @staticmethod
-    def net_from_osm(open_street, dest, ext = True):
-        file = "" if not ext else "/network.net.xml"
-        command = f"netconvert --osm-files {open_street} -o {dest}{file}"
+    def net_from_osm(open_street, dest):
+        if('.' not in path.basename(dest)): 
+            dest = path.join(dest, "network.net.xml")
+        command = f"netconvert --osm-files {open_street} -o {dest}"
         subprocess.run(command.split())
-        return f"{dest}{file}"
+        return dest
 
     @staticmethod
-    def trip_from_od(network, matrix, dest, ext = True):
-        file = "" if not ext else "/traffic.trips.xml"
-        command = f"od2trips -n {network} -d {matrix} -o {dest}{file}"
+    def trip_from_od(taz, matrix, dest, ext = True):
+        if('.' not in path.basename(dest)): 
+            dest = path.join(dest, "traffic.trips.xml")
+        command = f"od2trips -n ../tonterias/tazes.taz.xml -d {matrix} -o {dest}"
         subprocess.run(command.split())
-        return f"{dest}{file}"
+        return dest
 
     @staticmethod
     def random_trips(network, random, dest, ext = True):
-        file = "" if not ext else "/traffic.trips.xml"
-        comando = f"python {random} -n {network} -o {dest}{file} --fringe-factor 50"
+        if('.' not in path.basename(dest)): 
+            dest = path.join(dest, "traffic.trips.xml")
+        comando = f"python {random} -n {network} -o {dest} --fringe-factor 50"
         subprocess.run(comando.split())
-        return f"{dest}{file}"
+        return dest
 
     @staticmethod
     def rou_from_trip(network, trips, dest, ext = True):
-        file = "" if not ext else "/routes.rou.xml"
-        command = f"duarouter -n {network} -t {trips} -o {dest}{file}"
+        if('.' not in path.basename(dest)): 
+            dest = path.join(dest, "routes.rou.xml")
+        command = f"duarouter -n {network} -t {trips} -o {dest}"
         subprocess.run(command.split())
-        return f"{dest}{file}"
+        return dest
 
     @staticmethod
     def config_from_net_rou(network, routes, dest, ext = True):
-        file = "" if not ext else "/simulation.sumocfg"
+        if('.' not in path.basename(dest)): 
+            dest = path.join(dest, "simulation.sumocfg")
         config = f"""
         <configuration>
             <input>
@@ -60,8 +65,8 @@ class SumoSimulation:
             </input>
         </configuration>
         """
-        with open(dest + file, "w") as f: f.write(config)
-        return dest + file
+        with open(dest, "w") as f: f.write(config)
+        return dest
         
 
     def __init__(self, configuration: str = ""):
