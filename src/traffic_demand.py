@@ -1,6 +1,6 @@
 
 from random import randint
-
+from os import path
 
 class TrafficDemand:
 
@@ -69,3 +69,29 @@ class TrafficDemand:
                 traffic.append((in_k, out_key, values[out_key]))
 
         return traffic
+
+    @staticmethod
+    def write_taz_od(incoming_traffic: dict, outgoing_traffic: dict, traffic, time, dest):
+        taz = path.join(dest, "tazes.taz.xml")
+        with open(taz, "w") as f:
+            f.write("<tazs>\n")
+            for k in incoming_traffic:
+                f.write(f'\t<taz id="{k}" edges="{k}"/>\n')
+            for k in outgoing_traffic:
+                f.write(f'\t<taz id="{k}" edges="{k}"/>\n')
+            f.write("</tazs>\n")
+
+        od = path.join(dest, "matriz.od")
+        with open(od, "w") as f:
+            f.write("$OR;D2 \n")
+            f.write(time)
+            f.write("\n1.00\n")
+            for t in traffic:
+                f.write(f"{t[0]} {t[1]} {t[2]}")
+
+        return taz, od
+                
+
+
+
+

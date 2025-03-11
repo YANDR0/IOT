@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-03-10 18:08:12 by Eclipse SUMO duarouter Version 1.21.0
+<!-- generated on 2025-03-11 13:25:26 by Eclipse SUMO duarouter Version 1.21.0
 <duarouterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
 
     <input>
-        <net-file value="./assets/network.net.xml"/>
-        <route-files value="./assets/traffic.trips.xml"/>
+        <net-file value="./assets\network.net.xml"/>
+        <route-files value="./assets\traffic.trips.xml"/>
     </input>
 
     <output>
-        <output-file value="./assets/routes.rou.xml"/>
+        <output-file value="./assets\routes.rou.xml"/>
     </output>
 
 </duarouterConfiguration>
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-    <vehicle id="8" depart="8.27" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="8" depart="8.27" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="1" depart="9.51" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="1" depart="9.51" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="2" depart="10.32" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="2" depart="10.32" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="5" depart="15.39" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="5" depart="15.39" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="4" depart="18.88" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="4" depart="18.88" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="9" depart="33.45" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="9" depart="33.45" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="0" depart="35.35" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="0" depart="35.35" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="3" depart="38.16" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="3" depart="38.16" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="6" depart="50.04" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="6" depart="50.04" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>
     </vehicle>
-    <vehicle id="7" depart="56.85" departLane="free" departSpeed="max" fromTaz="A" toTaz="B">
+    <vehicle id="7" depart="56.85" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <routeDistribution last="0">
             <route cost="31.78" probability="1.00000000" edges="AD DH HI IL"/>
         </routeDistribution>

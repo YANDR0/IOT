@@ -1,8 +1,10 @@
 from sumo_simulation import SumoSimulation
 from lights_functions import LightsFunctions
+from traffic_demand import TrafficDemand
 from optimization import randomMin, hill_simulation, swarm_simulation
 from data_writer import DataWriter
 import os
+
 
 VISUAL = True
 
@@ -73,11 +75,16 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    #net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
-    #trips = SumoSimulation.trip_from_od("../tonterias/tazes.taz.xml", "../tonterias/matriz.od", "./assets")
-    #rou = SumoSimulation.rou_from_trip(net, trips, "./assets")
-    #config = SumoSimulation.config_from_net_rou(net.split("/")[-1], rou.split("/")[-1], "./assets")
-    #test_simulation(config, 100)
+    in_d = {"AD": 10}
+    out_d = {"IL": 10}
+    traffic = TrafficDemand.traffic_demand(in_d, out_d)
+    print(traffic)
+    taz, od = TrafficDemand.write_taz_od(in_d, out_d, traffic, "0.0 0.01", "../tonterias")
+    net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
+    trips = SumoSimulation.trip_from_od("../tonterias/tazes.taz.xml", "../tonterias/matriz.od", "./assets")
+    rou = SumoSimulation.rou_from_trip(net, trips, "./assets")
+    config = SumoSimulation.config_from_net_rou(os.path.basename(net), os.path.basename(rou), "./assets")
+    test_simulation(config)
 
 
 

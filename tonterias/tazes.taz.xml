@@ -1,6 +1,4 @@
 <tazs>
-    <taz id="A" edges="AD"/>
-    <taz id="B" edges="IL"/>
+	<taz id="AD" edges="AD"/>
+	<taz id="IL" edges="IL"/>
 </tazs>
-
-

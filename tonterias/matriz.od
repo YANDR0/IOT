@@ -1,8 +1,4 @@
-$OR;D2
-* From-Time  To-Time    hours.minutes
+$OR;D2 
 0.0 0.01
-* Factor
 1.00
-* Matrix
-A B 10.00
-
+AD IL 10

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-03-10 18:08:12 by Eclipse SUMO od2trips Version 1.21.0
+<!-- generated on 2025-03-11 13:25:26 by Eclipse SUMO od2trips Version 1.21.0
 <od2tripsConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/od2tripsConfiguration.xsd">
 
     <input>
@@ -9,21 +9,21 @@
     </input>
 
     <output>
-        <output-file value="./assets/traffic.trips.xml"/>
+        <output-file value="./assets\traffic.trips.xml"/>
     </output>
 
 </od2tripsConfiguration>
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
-    <trip id="8" depart="8.27" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="1" depart="9.51" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="2" depart="10.32" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="5" depart="15.39" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="4" depart="18.88" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="9" depart="33.45" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="0" depart="35.35" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="3" depart="38.16" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="6" depart="50.04" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
-    <trip id="7" depart="56.85" from="AD" to="IL" fromTaz="A" toTaz="B" departLane="free" departSpeed="max"/>
+    <trip id="8" depart="8.27" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="1" depart="9.51" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="2" depart="10.32" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="5" depart="15.39" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="4" depart="18.88" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="9" depart="33.45" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="0" depart="35.35" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="3" depart="38.16" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="6" depart="50.04" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
+    <trip id="7" depart="56.85" from="AD" to="IL" fromTaz="AD" toTaz="IL" departLane="free" departSpeed="max"/>
 </routes>
