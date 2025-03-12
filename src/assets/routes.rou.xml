@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-03-11 13:25:26 by Eclipse SUMO duarouter Version 1.21.0
+<!-- generated on 2025-03-11 19:04:36 by Eclipse SUMO duarouter Version 1.21.0
 <duarouterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
 
     <input>
@@ -16,19 +16,88 @@
 -->
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vehicle id="30" depart="1.35" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="12" depart="2.95" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="17" depart="4.05" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="42" depart="5.40" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="28" depart="7.20" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="46" depart="7.38" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
     <vehicle id="8" depart="8.27" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
     <vehicle id="1" depart="9.51" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
+    <vehicle id="26" depart="10.31" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
     <vehicle id="2" depart="10.32" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="41" depart="10.41" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="20" depart="11.32" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="21" depart="11.49" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="22" depart="13.02" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="18" depart="13.47" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="10" depart="13.56" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
     <vehicle id="5" depart="15.39" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
+    <vehicle id="13" depart="16.83" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="16" depart="17.63" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="27" depart="18.01" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="34" depart="18.07" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="29" depart="18.13" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
     <vehicle id="4" depart="18.88" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="15" depart="19.06" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="43" depart="20.63" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="45" depart="22.97" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="32" depart="24.83" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="19" depart="31.95" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
     <vehicle id="9" depart="33.45" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
@@ -37,13 +106,64 @@
     <vehicle id="0" depart="35.35" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
+    <vehicle id="23" depart="35.86" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="44" depart="35.98" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="47" depart="36.13" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="39" depart="36.17" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="31" depart="37.23" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
     <vehicle id="3" depart="38.16" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="33" depart="42.14" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="14" depart="43.38" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="48" depart="43.64" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="38" depart="48.66" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
     <vehicle id="6" depart="50.04" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
+    <vehicle id="37" depart="51.51" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="11" depart="52.36" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="49" depart="52.60" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="24" depart="55.48" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="40" depart="55.80" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
     <vehicle id="7" depart="56.85" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="36" depart="57.03" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="25" depart="58.34" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
+        <route edges="AD DH HI IL"/>
+    </vehicle>
+    <vehicle id="35" depart="58.99" departLane="free" departSpeed="max" fromTaz="AD" toTaz="IL">
         <route edges="AD DH HI IL"/>
     </vehicle>
 </routes>

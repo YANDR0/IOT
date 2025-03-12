@@ -9,7 +9,7 @@ class LightsFunctions:
 
     def __init__(self, file, steps: int = 100, data_writer = None):
         if(not LightsFunctions.metric_function):
-            LightsFunctions.metric_function = LightsFunctions.get_metrics_function(20, 1, 20)
+            LightsFunctions.metric_function = LightsFunctions.get_metrics_function(100, 0, 0)
         self.simulation_steps = steps
         self.lights = None
         self.phases_number = 0

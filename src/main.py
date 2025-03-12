@@ -15,6 +15,14 @@ def generate_files():
     config = SumoSimulation.config_from_net_rou(net.split("/")[-1], rou.split("/")[-1], "./assets")
     return config
 
+def generate_files_2(in_d, out_d):
+    traffic = TrafficDemand.traffic_demand(in_d, out_d)
+    taz, od = TrafficDemand.write_taz_od(in_d, out_d, traffic, "0.0 0.01", "../tonterias")
+    net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
+    trips = SumoSimulation.trip_from_od("../tonterias/tazes.taz.xml", "../tonterias/matriz.od", "./assets")
+    rou = SumoSimulation.rou_from_trip(net, trips, "./assets")
+    config = SumoSimulation.config_from_net_rou(os.path.basename(net), os.path.basename(rou), "./assets")
+
 def test_simulation(config, steps = 250) -> dict[str, float]:
     sumo = SumoSimulation(config)
     sumo.start_simulation(VISUAL)
@@ -25,15 +33,15 @@ def test_simulation(config, steps = 250) -> dict[str, float]:
 def optimice_trafficlights(data = None) -> None:
 
     data_writer = DataWriter('default','data')
-    lights_function = LightsFunctions("./assets/simulation.sumocfg", steps=100, data_writer=data_writer)
+    lights_function = LightsFunctions("./assets/simulation.sumocfg", steps=90, data_writer=data_writer)
     x_low, x_high = lights_function.get_min_max(5, 150)
 
     data_writer.change_file('random')
-    x1, y1 = randomMin(lights_function.all_lights, x_low, x_high, 1000, data["random"] if data else None)
+    x1, y1 = randomMin(lights_function.all_lights, x_low, x_high, 50, data["random"] if data else None)
     data_writer.change_file('hill')
-    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 1000, data["hill"] if data else None)
+    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 50, data["hill"] if data else None)
     data_writer.change_file('swarm')
-    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 5, 200, data["swarm"] if data else None)
+    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 5, 10, data["swarm"] if data else None)
     data_writer.write_file()
 
 def check_data():
@@ -55,9 +63,9 @@ def check_data():
     return data
 
 def show_cases(data):
-    simulation = LightsFunctions("./assets/simulation.sumocfg", 100)
+    simulation = LightsFunctions("./assets/simulation.sumocfg", 90)
 
-    test_simulation("./assets/simulation.sumocfg", 100)
+    test_simulation("./assets/simulation.sumocfg", 90)
 
     print("random")
     simulation.all_lights(data['random']['x'], True)
@@ -75,16 +83,15 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    in_d = {"AD": 10}
-    out_d = {"IL": 10}
-    traffic = TrafficDemand.traffic_demand(in_d, out_d)
-    print(traffic)
-    taz, od = TrafficDemand.write_taz_od(in_d, out_d, traffic, "0.0 0.01", "../tonterias")
-    net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
-    trips = SumoSimulation.trip_from_od("../tonterias/tazes.taz.xml", "../tonterias/matriz.od", "./assets")
-    rou = SumoSimulation.rou_from_trip(net, trips, "./assets")
-    config = SumoSimulation.config_from_net_rou(os.path.basename(net), os.path.basename(rou), "./assets")
-    test_simulation(config)
+
+    generate_files_2({"AD": 50}, {"IL": 50})
+    optimice_trafficlights()
+    data = check_data()
+    show_cases(data)
+
+
+    
+
 
 
 
