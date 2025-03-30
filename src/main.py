@@ -94,7 +94,7 @@ if __name__ == "__main__":
     os.chdir(script_dir)
 
 
-    generate_files_2({"AD": 100}, {"IL": 50, "HK": 50})
+    generate_files_2({"AD": 50}, {"IL": 50})
     optimice_trafficlights()
     data = check_data()
     show_cases(data)

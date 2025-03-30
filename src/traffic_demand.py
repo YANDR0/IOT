@@ -87,7 +87,7 @@ class TrafficDemand:
             f.write(time)
             f.write("\n1.00\n")
             for t in traffic:
-                f.write(f"{t[0]} {t[1]} {t[2]}")
+                f.write(f"{t[0]} {t[1]} {t[2]}\n")
 
         return taz, od
                 
