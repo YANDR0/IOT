@@ -1,3 +1,0 @@
-od2trips -n .\tazes.taz.xml -d .\matriz.od -o "idea..trips.xml"
-
-El comando fue este

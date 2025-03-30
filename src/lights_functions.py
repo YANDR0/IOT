@@ -25,14 +25,22 @@ class LightsFunctions:
         simulation.run_simulation(0)
         self.lights, self.phases_number = simulation.get_lights()
 
-    def get_min_max(self, min_time, max_time):
-        return [min_time for _ in range(self.phases_number)], [max_time for _ in range(self.phases_number)]
+    def get_min_max(self, min_time_rg, max_time_rg, min_time_y = None, max_time_y = None):
+        min_time = []
+        max_time = []
+
+        for key in self.lights:
+            for phase in self.lights[key]:
+                min_time.append(min_time_y if min_time_y and 'y' in phase else min_time_rg)
+                max_time.append(max_time_y if max_time_y and 'y' in phase else max_time_rg)
+
+        return min_time, max_time
 
     def all_lights(self, x, visual = False):
         SUMO = SumoSimulation(self.file)
         SUMO.start_simulation(visual)
         if(not self.lights):
-            self.get_ligths_phases(SUMO)
+            return None
 
         i = 0
         for key in self.lights:

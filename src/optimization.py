@@ -1,6 +1,7 @@
 from math import cos, pi, e
-from random import random, uniform
+from random import random, uniform, randint
 from time import time
+import copy, functools
 
 
 ### Test functions ###
@@ -93,7 +94,6 @@ class HillClimbing:
 
 ### Swarm algoritm
 
-
 # Variables de particulas o
 class Swarm:
     # Crear enjambre
@@ -162,7 +162,83 @@ class Particle:
 # -------------------------------------------------------------
 
 
+class Individual():
+    def __init__(self, xl, xh):
+        self.N = len(xl)
+        self.genotype = [randint(0, 9) for _ in range(6*self.N)]
+        self.phenotype = [0 for _ in range(self.N)]
+        self.toPhenotype(xl, xh)
+        self.fitness = 0
+        self.expected_value = 0
+
+    def toPhenotype(self, xl, xh): 
+        max_num = 10**(6)-1
+        for i in range(self.N):
+            section = self.genotype[i*6: (i+1)*6]
+            chromo = functools.reduce(lambda x, y: x * 10 + y, section)
+            self.phenotype[i] = xl[i] + chromo/max_num * (xh[i] - xl[i])
+
+def createPop(M, xl, xh):
+    return [Individual(xl, xh) for _ in range(M)] 
+
+def fitness(func, x, fxl, fxh):
+    return 1 - (func(x) - fxl) / (fxh - fxl)
+
+def update_fitness(func, pop: list[Individual], fxl, fxh):
+    best = copy.deepcopy(pop[0])
+    for i in pop:
+        i.fitness = fitness(func, i.phenotype, fxl, fxh)
+        if(i.fitness > best.fitness):
+            best = copy.deepcopy(i)
+    return best
+
+def selection(pop: list[Individual]):
+    pop.sort(key=lambda x: x.fitness)
+    N = len(pop)
+    for i in range(N):
+        pop[i].expected_value = 0.9 + (1.1 - 0.9) * i / (N - 1)
+
+    new_list = [copy.deepcopy(pop[-1])]
+    
+    for i in range(N-1):
+        pick = random()*N
+        sum = 0 
+        i = 0
+        while sum < pick:
+            sum += pop[i].expected_value
+            i = (i+1)%N
+        new_list.append(copy.deepcopy(pop[i]))
+
+    return new_list
+
+def crossover(pop: list[Individual]):
+    N = len(pop)
+    sizeC = pop[0].N
+    for i1 in range(2, N, 2):
+        if(random() > 0.8): continue
+        i2 = i1+1
+        if(i2 >= N): break
+
+        alelo1 = randint(0, sizeC*6-1)
+        alelo2 = randint(alelo1+1, sizeC*6)
+
+        for i in range(alelo1, alelo2):
+            if random() > 0.5: continue
+            pop[i1].genotype[i], pop[i2].genotype[i] = pop[i2].genotype[i], pop[i1].genotype[i]
+
+def mutation(pop: list[Individual]):
+    size = pop[0].N * 6 - 1
+    for i in range(1, len(pop)):
+        if random() > 0.2: continue
+        pos = randint(0, size)
+        pop[i].genotype[pos] = randint(0,9)
+
+
+
+# --------------------------------------------------------------
+
 ### Main ###
+# func = function, xLow and xHigh = LimitX, m size simulation, n simulations, data = previous results
 def swarm_simulation(func, xLow, xHigh, m, n, data):
     swarm = Swarm(func, 0.001, 0.1, 0.1, xLow, xHigh)
     particles = [swarm.createParticle() for _ in range(m)]
@@ -176,13 +252,13 @@ def swarm_simulation(func, xLow, xHigh, m, n, data):
 
     return swarm
 
-
+# func = function, xLow and xHigh = LimitX, n = simulations, data = previous results
 def hill_simulation(func, xLow, xHigh, n, data):
     hill = HillClimbing(func, xLow, xHigh)
     return hill.optimizeRange(n, data)
 
-
-def randomMin(func, xLow, xHigh, n, data):
+# func = function, xLow and xHigh = LimitX, n = simulations, data = previous results
+def random_simulation(func, xLow, xHigh, n, data):
     yMin = float("inf") if not data else data['y']
     dim = len(xLow)
     xMin = [0 for _ in range(dim)] if not data else data['x']
@@ -195,6 +271,24 @@ def randomMin(func, xLow, xHigh, n, data):
 
     return xMin, yMin
 
+# func = function, N simulations, M poblation size, xl and xh = LimitX, fxl and fxh = Expected limits of Y
+def genetic_simulation(func, xl, xh, N, M, fxl, fxh):
+    pop = createPop(M, xl, xh)
+    bf = 0
+    for _ in range(N):
+        best: Individual = update_fitness(func, pop, fxl, fxh)
+        if bf < best.fitness:
+            bf = best.fitness
+        pop = selection(pop)
+        crossover(pop)
+        mutation(pop)
+        for i in pop: i.toPhenotype(xl, xh)
+    best = update_fitness(func, pop, fxl, fxh)
+    return best
+
+
+
+
 
 ###########
 if __name__ == "__main__":
@@ -204,13 +298,13 @@ if __name__ == "__main__":
     #'''
     print("Random")
     start = time()
-    x, y = randomMin(rosenbrock, xLow, xHigh, 100_000)
+    x, y = random_simulation(rosenbrock, xLow, xHigh, 100_000)
     print("Rosenbrock", x, y)
-    x, y = randomMin(rastrigin, xLow, xHigh, 100_000)
+    x, y = random_simulation(rastrigin, xLow, xHigh, 100_000)
     print("Rastrigin", x, y)
-    x, y = randomMin(styblinski, xLow, xHigh, 100_000)
+    x, y = random_simulation(styblinski, xLow, xHigh, 100_000)
     print("Styblinski", x, y)
-    x, y = randomMin(ackley, xLow, xHigh, 100_000)
+    x, y = random_simulation(ackley, xLow, xHigh, 100_000)
     print("Ackley", x, y)
     print("- Time: ", time() - start)
     #'''
@@ -241,4 +335,9 @@ if __name__ == "__main__":
     s = swarm_simulation(ackley, xLow, xHigh, 100, 1000)
     print("Ackley", s.BestX, s.BestY)
     print("- Time: ", time() - start)
+    
+
+    min = genetic_simulation(500, 100, [-5, -5], [5, 5], -80, 250)
+    x = [-2.903535,-2.903534]
+    print(min, styblinski(min), x, styblinski(x))
     #'''
