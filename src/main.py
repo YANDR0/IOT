@@ -33,17 +33,17 @@ def test_simulation(config, steps = 250) -> dict[str, float]:
 
 def optimice_trafficlights(data = None) -> None:
     data_writer = DataWriter('default','data')
-    lights_function = LightsFunctions("./assets/simulation.sumocfg", steps=90, data_writer=data_writer)
-    x_low, x_high = lights_function.get_min_max(0, 150)
+    lights_function = LightsFunctions("./assets/simulation.sumocfg", steps=200, data_writer=data_writer)
+    x_low, x_high = lights_function.get_min_max(0, 150, 0, 5)
 
     data_writer.change_file('random')
-    x1, y1 = random_simulation(lights_function.all_lights, x_low, x_high, 50, data["random"] if data else None)
+    x1, y1 = random_simulation(lights_function.all_lights, x_low, x_high, 100, data["random"] if data else None)
     data_writer.change_file('hill')
-    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 50, data["hill"] if data else None)
+    x2, y2 = hill_simulation(lights_function.all_lights, x_low, x_high, 100, data["hill"] if data else None)
     data_writer.change_file('swarm')
-    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 5, 10, data["swarm"] if data else None)
+    s = swarm_simulation(lights_function.all_lights, x_low, x_high, 5, 20, data["swarm"] if data else None)
     data_writer.change_file('genetic')
-    a = genetic_simulation(lights_function.all_lights, x_low, x_high, 5, 10, -5, 105)
+    a = genetic_simulation(lights_function.all_lights, x_low, x_high, 5, 20, -5, 105)
     data_writer.write_file()
 
 def check_data():
@@ -69,9 +69,9 @@ def check_data():
     return data
 
 def show_cases(data):
-    simulation = LightsFunctions("./assets/simulation.sumocfg", 90)
+    simulation = LightsFunctions("./assets/simulation.sumocfg", 200)
 
-    test_simulation("./assets/simulation.sumocfg", 90)
+    test_simulation("./assets/simulation.sumocfg", 200)
 
     print("random")
     simulation.all_lights(data['random']['x'], True)
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     os.chdir(script_dir)
 
 
-    generate_files_2({"AD": 50}, {"IL": 50})
+    generate_files_2({"AD": 100}, {"IL": 50, "HK": 50})
     optimice_trafficlights()
     data = check_data()
     show_cases(data)
