@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-03-11 19:04:36 by Eclipse SUMO od2trips Version 1.21.0
+<!-- generated on 2025-03-30 18:11:02 by Eclipse SUMO od2trips Version 1.21.0
 <od2tripsConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/od2tripsConfiguration.xsd">
 
     <input>
-        <taz-files value="../tonterias/tazes.taz.xml"/>
-        <od-matrix-files value="../tonterias/matriz.od"/>
+        <taz-files value="./assets\tazes.taz.xml"/>
+        <od-matrix-files value="./assets\matriz.od"/>
     </input>
 
     <output>

@@ -18,8 +18,9 @@ def generate_files():
 def generate_files_2(in_d, out_d):
     traffic = TrafficDemand.traffic_demand(in_d, out_d)
     taz, od = TrafficDemand.write_taz_od(in_d, out_d, traffic, "0.0 0.01", "./assets")
+    print(taz, od)
     net = SumoSimulation.net_from_nod_edg("./assets/nodes.nod.xml", "./assets/edges.edg.xml", "./assets")
-    trips = SumoSimulation.trip_from_od("./assets/tazes.taz.xml", "./assets/matriz.od", "./assets")
+    trips = SumoSimulation.trip_from_od(taz, od, "./assets")
     rou = SumoSimulation.rou_from_trip(net, trips, "./assets")
     config = SumoSimulation.config_from_net_rou(os.path.basename(net), os.path.basename(rou), "./assets")
     return config
@@ -95,9 +96,9 @@ if __name__ == "__main__":
 
 
     generate_files_2({"AD": 50}, {"IL": 50})
-    optimice_trafficlights()
-    data = check_data()
-    show_cases(data)
+    #optimice_trafficlights()
+    #data = check_data()
+    #show_cases(data)
 
 
     

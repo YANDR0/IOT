@@ -33,7 +33,7 @@ class SumoSimulation:
     def trip_from_od(taz, matrix, dest, ext = True):
         if('.' not in path.basename(dest)): 
             dest = path.join(dest, "traffic.trips.xml")
-        command = f"od2trips -n ../tonterias/tazes.taz.xml -d {matrix} -o {dest}"
+        command = f"od2trips -n {taz} -d {matrix} -o {dest}"
         subprocess.run(command.split())
         return dest
 
