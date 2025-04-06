@@ -99,13 +99,16 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    # Se puede reemplazar con lectura de archivo o similar
-    in_traffic = {"AD": 50}
-    out_traffic = {"IL": 50}
-    time = "0.0 0.01"
-    network = "./assets/network.net.xml"
+    data = TrafficDemand.read_csv('./assets/data.csv')
+    print(data)
 
-    configuration = generate_files(network, in_traffic, out_traffic, time)
+
+    #in_traffic = {"AD": 50}
+    #out_traffic = {"IL": 50}
+    #time = "0.0 0.01"
+    #network = "./assets/network.net.xml"
+
+    #configuration = generate_files(network, in_traffic, out_traffic, time)
     #optimice_trafficlights(configuration)
     #data = check_data()
     #show_cases(configuration, data)

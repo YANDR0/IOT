@@ -1,8 +1,18 @@
 
 from random import randint
 from os import path
+import csv
 
 class TrafficDemand:
+
+    @staticmethod
+    def read_csv(route):
+        result = {}
+        with open(route, newline='') as file:
+            data = csv.reader(file)
+            for row in data:
+                result[row[0]] = int(row[1])
+        return result
 
     @staticmethod
     def match_traffic(traffic_1: dict, traffic_2: dict):
