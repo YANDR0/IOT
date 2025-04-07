@@ -81,5 +81,7 @@ if __name__ == "__main__":
     #print(data)
     #show_cases(data)
 
+    archivo1 = SumoSimulation.random_trips("./assets/red_hidalgo-federalismo.net.xml", "./assets/randomTrips.py", "./assets/algo.trips.xml", False)
+    archivo2 = SumoSimulation.rou_from_trip("./assets/red_hidalgo-federalismo.net.xml", archivo1, "./assets/algo.rou.xml", False)
     #Todo el show de OD
     #SumoSimulation.trip_from_od("./assets/network.net.xml", "./assets/od_matrix.od.xml", "./assets")
