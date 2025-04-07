@@ -7,9 +7,10 @@ class LightsFunctions:
 
     metric_function = None
 
-    def __init__(self, file, steps: int = 100, data_writer = None):
+    def __init__(self, file, cars, steps: int = 100, data_writer = None):
         if(not LightsFunctions.metric_function):
             LightsFunctions.metric_function = LightsFunctions.get_metrics_function(100, 0, 0)
+        self.cars = cars
         self.simulation_steps = steps
         self.lights = None
         self.phases_number = 0
@@ -57,6 +58,7 @@ class LightsFunctions:
         SUMO.end_simulation()
 
         y = LightsFunctions.metric_function(data)
+        data["expected_traffic"] = self.cars
         data["x"] = x
         data["y"] = y
         if(self.data_writer): self.data_writer.add_data(data)

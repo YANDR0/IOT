@@ -34,11 +34,11 @@ def test_simulation(config, steps = STEPS) -> dict[str, float]:
     return result
 
 ### Optimiza los semáforos y escribe los resultados 
-def optimice_trafficlights(config, data = None) -> None:
+def optimice_trafficlights(config, cars, data = None) -> None:
     ### Objeto que escribe los resultados
     data_writer = DataWriter('default','data')
     ### Encargado de manejar la simulación y devolver resultados
-    lights_function = LightsFunctions(config, steps=STEPS, data_writer=data_writer)
+    lights_function = LightsFunctions(config, cars, steps=STEPS, data_writer=data_writer)
     ### Genera las listas mínimas y máximas de tiempo en base a la simulación () 
     x_low, x_high = lights_function.get_min_max(0, 150, 0, 5)
 
@@ -99,17 +99,19 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    data = TrafficDemand.read_csv('./assets/data.csv')
-    print(data)
+    #data = TrafficDemand.read_csv('./assets/data.csv')
+    #print(data)
 
 
-    #in_traffic = {"AD": 50}
-    #out_traffic = {"IL": 50}
-    #time = "0.0 0.01"
-    #network = "./assets/network.net.xml"
+    in_traffic = {"827477051": 50}
+    out_traffic = {"1213382698#1": 50}
+    time = "0.0 0.01"
+    network = "./assets/mapachido.net.xml"
 
-    #configuration = generate_files(network, in_traffic, out_traffic, time)
-    #optimice_trafficlights(configuration)
+    configuration = generate_files(network, in_traffic, out_traffic, time)
+    test_simulation(configuration, 200)
+    #cars = sum(in_traffic.values())
+    #optimice_trafficlights(configuration, cars)
     #data = check_data()
     #show_cases(configuration, data)
 
