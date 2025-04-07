@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-03-09 10:12:56.640397 by randomTrips.py v1_22_0+0002-63e50f52594
+<!-- generated on 2025-03-09 13:28:22.478808 by randomTrips.py v1_22_0+0002-63e50f52594
 <configuration>
     <net-file value=".\src\assets\red_hidalgo-federalismo.net.xml"/>
-    <output-trip-file value="hf.trips.xml"/>
+    <output-trip-file value="./src/assets/hf.trips.xml"/>
 </configuration>
 -->
 
