@@ -4,6 +4,7 @@ from traffic_demand import TrafficDemand
 from optimization import random_simulation, hill_simulation, swarm_simulation, genetic_simulation
 from data_writer import DataWriter
 import os
+from time import sleep
 
 STEPS = 200
 
@@ -103,13 +104,16 @@ if __name__ == "__main__":
     #print(data)
 
 
-    in_traffic = {"827477051": 50}
-    out_traffic = {"1213382698#1": 50}
-    time = "0.0 0.01"
+    #in_traffic = {"827477051": 50}
+    #out_traffic = {"1213382698#1": 50}
+    in_traffic = TrafficDemand.read_csv('./assets/entrada.csv')
+    out_traffic = TrafficDemand.read_csv('./assets/salida.csv')
+    time = "0.0 0.30"
     network = "./assets/mapachido.net.xml"
-
+    print(in_traffic)
+    print(out_traffic)
     configuration = generate_files(network, in_traffic, out_traffic, time)
-    test_simulation(configuration, 200)
+    test_simulation(configuration, 30*60)
     #cars = sum(in_traffic.values())
     #optimice_trafficlights(configuration, cars)
     #data = check_data()

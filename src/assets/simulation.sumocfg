@@ -1,7 +1,7 @@
 
         <configuration>
             <input>
-                <net-file value="network.net.xml"/>
+                <net-file value="mapachido.net.xml"/>
                 <route-files value="routes.rou.xml"/>
             </input>
         </configuration>
