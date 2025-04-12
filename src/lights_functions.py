@@ -5,11 +5,7 @@ from data_writer import DataWriter
 
 class LightsFunctions:
 
-    metric_function = None
-
     def __init__(self, file, cars, steps: int = 100, data_writer = None):
-        if(not LightsFunctions.metric_function):
-            LightsFunctions.metric_function = LightsFunctions.get_metrics_function(100, 0, 0)
         self.cars = cars
         self.simulation_steps = steps
         self.lights = None
@@ -57,15 +53,18 @@ class LightsFunctions:
         data = SUMO.run_simulation(self.simulation_steps)
         SUMO.end_simulation()
 
-        y = LightsFunctions.metric_function(data)
         data["expected_traffic"] = self.cars
-        data["x"] = x
-        data["y"] = y
-        if(self.data_writer): self.data_writer.add_data(data)
+        y = LightsFunctions.get_metrics_function(data)
+        
+        if(self.data_writer): 
+            data["x"] = x
+            data["y"] = y
+            self.data_writer.add_data(data)
+
         return y
 
-    ### Acá podemos describir la función de Y, la cosa es que no sé que nos da avg_wait_time o avg_speed
-    # O como normalizarlos en general :v
+
+    ### Escribir la formula para f(x) en este sitio
     @staticmethod
-    def get_metrics_function(w1 = 1, w2 = 1, w3 = 1):
-        return lambda data: (1 - data["traffic_flow"]) * w1 + data["avg_wait_time"] * w2 + (1/data["avg_speed"]) * w3
+    def get_metrics_function(data):
+        return 1 - (data["arrived_number"] / data["expected_traffic"]) if data["expected_traffic"] > 0 else 10**10

@@ -30,7 +30,7 @@ class SumoSimulation:
         return dest
 
     @staticmethod
-    def trip_from_od(taz, matrix, dest, ext = True):
+    def trip_from_od(taz, matrix, dest):
         if('.' not in path.basename(dest)): 
             dest = path.join(dest, "traffic.trips.xml")
         command = f"od2trips -n {taz} -d {matrix} -o {dest}"
@@ -38,7 +38,7 @@ class SumoSimulation:
         return dest
 
     @staticmethod
-    def random_trips(network, random, dest, ext = True):
+    def random_trips(network, random, dest):
         if('.' not in path.basename(dest)): 
             dest = path.join(dest, "traffic.trips.xml")
         comando = f"python {random} -n {network} -o {dest} --fringe-factor 50"
@@ -46,7 +46,7 @@ class SumoSimulation:
         return dest
 
     @staticmethod
-    def rou_from_trip(network, trips, dest, ext = True):
+    def rou_from_trip(network, trips, dest):
         if('.' not in path.basename(dest)): 
             dest = path.join(dest, "routes.rou.xml")
         command = f"duarouter -n {network} -t {trips} -o {dest}"
@@ -54,7 +54,7 @@ class SumoSimulation:
         return dest
 
     @staticmethod
-    def config_from_net_rou(network, routes, dest, ext = True):
+    def config_from_net_rou(network, routes, dest):
         if('.' not in path.basename(dest)): 
             dest = path.join(dest, "simulation.sumocfg")
         config = f"""
@@ -95,31 +95,48 @@ class SumoSimulation:
             return {}
 
         self.step = SimulationState.RUNNING
-        total_ends, total_starts, total_wait_time, total_speed, total_vehicles = (
-            0,
-            0,
-            0,
-            0,
-            0,
-        )
+
+        arrived_number = 0
+        departed_number = 0
+        average_speed = 0
+        average_wait_time = 0
+        average_travel_time = 0
+        travel_time = {}
+        wait_time = {}
+        vehicle_speed = {}
 
         for _ in range(steps):
             traci.simulationStep()
-            total_ends += traci.simulation.getArrivedNumber()
-            total_starts += traci.simulation.getDepartedNumber()
-            vehicles = traci.vehicle.getIDList()
-            total_vehicles += len(vehicles)
+            simulation_time = traci.simulation.getTime()
+            departed_number += traci.simulation.getDepartedNumber()
 
-            for vehicle in vehicles:
-                total_wait_time += traci.vehicle.getAccumulatedWaitingTime(vehicle)
-                total_speed += traci.vehicle.getSpeed(vehicle)
+            vehicles = traci.vehicle.getIDList()
+            for v in vehicles:
+                if(v not in travel_time):
+                    travel_time[v] = simulation_time
+                    vehicle_speed[v] = []
+                    wait_time[v] = 0
+
+                curr_speed = traci.vehicle.getSpeed(v)
+                vehicle_speed[v].append(curr_speed)
+                wait_time[v] += 1 if curr_speed < 0.1 else 0
+
+            arrived_list = traci.simulation.getArrivedIDList()
+            arrived_number += len(arrived_list)
+            for arrived in arrived_list:
+                travel_time[v] = simulation_time - travel_time[v]
+
+        for v in travel_time:
+            average_speed += sum(vehicle_speed[v]) / len(vehicle_speed[v]) if len(vehicle_speed[v]) > 0 else 0
+            average_wait_time += wait_time[v]
+            average_travel_time += travel_time[v]
 
         return {
-            "total_ends": total_ends,
-            "total_starts": total_starts,
-            "traffic_flow": total_ends / total_starts if total_starts else 0.0,
-            "avg_wait_time": total_wait_time / total_vehicles if total_vehicles else 0.0,
-            "avg_speed": total_speed / total_vehicles if total_vehicles else 0.0,
+            "arrived_number": arrived_number,
+            "departed_number": departed_number,
+            "average_speed": average_speed / departed_number if departed_number > 0 else 0,
+            "average_wait_time": average_wait_time / departed_number if departed_number > 0 else 0,
+            "average_travel_time": average_travel_time / arrived_number if arrived_number > 0 else 0
         }
 
     def end_simulation(self) -> None:

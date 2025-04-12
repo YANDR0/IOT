@@ -100,24 +100,16 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    #data = TrafficDemand.read_csv('./assets/data.csv')
-    #print(data)
-
-
-    #in_traffic = {"827477051": 50}
-    #out_traffic = {"1213382698#1": 50}
-    in_traffic = TrafficDemand.read_csv('./assets/entrada.csv')
-    out_traffic = TrafficDemand.read_csv('./assets/salida.csv')
-    time = "0.0 0.30"
-    network = "./assets/mapachido.net.xml"
-    print(in_traffic)
-    print(out_traffic)
+    time = "0.0 0.01"
+    network = "./assets/network.net.xml"
+    in_traffic = {'AD': 50} #TrafficDemand.read_csv('./assets/entrada.csv')
+    out_traffic = {'IL': 50} #TrafficDemand.read_csv('./assets/salida.csv')
     configuration = generate_files(network, in_traffic, out_traffic, time)
-    test_simulation(configuration, 30*60)
-    #cars = sum(in_traffic.values())
-    #optimice_trafficlights(configuration, cars)
-    #data = check_data()
-    #show_cases(configuration, data)
+    a = test_simulation(configuration, 100)
+    cars = sum(in_traffic.values())
+    optimice_trafficlights(configuration, cars)
+    data = check_data()
+    show_cases(configuration, data)
 
 
 
