@@ -14,12 +14,10 @@ def generate_files(net, in_d, out_d, time):
     traffic = TrafficDemand.traffic_demand(in_d, out_d)
     ### Genera los archivos de la matriz de demanda (.taz y .od)
     taz, od = TrafficDemand.write_taz_od(in_d, out_d, traffic, time, "./assets")
-    print()
     ### Genera los viajes en base a la matriz (.trip)
     trips = SumoSimulation.trip_from_od(taz, od, "./assets")
     ### Genera las rutas en base a los viajes (.rou)
     rou = SumoSimulation.rou_from_trip(net, trips, "./assets")
-    print(rou)
     ### Genera el archivo de configuración en base a las rutas y red (.config)
     config = SumoSimulation.config_from_net_rou(os.path.basename(net), os.path.basename(rou), "./assets")
 
@@ -40,7 +38,7 @@ def optimice_trafficlights(config, cars, data = None) -> None:
     data_writer = DataWriter('default','data')
     ### Encargado de manejar la simulación y devolver resultados
     lights_function = LightsFunctions(config, cars, steps=STEPS, data_writer=data_writer)
-    ### Genera las listas mínimas y máximas de tiempo en base a la simulación () 
+    ### Genera las listas mínimas y máximas de tiempo en base a la simulación 
     x_low, x_high = lights_function.get_min_max(0, 150, 0, 5)
 
     ### Correr y optimizar la simulación en base a los 3 algoritmos
@@ -100,12 +98,12 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    time = "0.0 0.01"
-    network = "./assets/network.net.xml"
-    in_traffic = {'AD': 50} #TrafficDemand.read_csv('./assets/entrada.csv')
-    out_traffic = {'IL': 50} #TrafficDemand.read_csv('./assets/salida.csv')
-    configuration = generate_files(network, in_traffic, out_traffic, time)
-    a = test_simulation(configuration, 100)
+    time = "0.0 0.01"   # <--- Tiempo de Inicio y fin en formato de horas.minutos
+    network = "./assets/network.net.xml"    # <---Directorio de la red
+    in_traffic = TrafficDemand.read_csv('./assets/entrada.csv') # <--- archivo csv con lista de entrada
+    out_traffic = TrafficDemand.read_csv('./assets/salida.csv') # <--- archivo csv con lista de salida
+    configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
+    #test_simulation(configuration, 100)
     cars = sum(in_traffic.values())
     optimice_trafficlights(configuration, cars)
     data = check_data()

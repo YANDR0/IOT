@@ -64,7 +64,14 @@ class LightsFunctions:
         return y
 
 
-    ### Escribir la formula para f(x) en este sitio
+    ### Escribir la formula para f(x) en este sitio, argumentos que tienen en data[]
+    # arrived_number <-- Número de carros que salieron de la simulación
+    # departed_number <-- Número de carros que entraron a la simulación
+    # expected_traffic <-- Número de carros que se espera que se generen (total)
+    # average_speed <-- Velocidad promedio
+    # average_wait_time <-- Tiempo de espera promedio
+    # average_travel_time <-- Promedio de viaje de los carros que salieron de la simulación
+
     @staticmethod
     def get_metrics_function(data):
         return 1 - (data["arrived_number"] / data["expected_traffic"]) if data["expected_traffic"] > 0 else 10**10
