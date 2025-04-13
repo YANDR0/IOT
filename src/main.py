@@ -39,7 +39,7 @@ def optimice_trafficlights(config, cars, data = None) -> None:
     ### Encargado de manejar la simulación y devolver resultados
     lights_function = LightsFunctions(config, cars, steps=STEPS, data_writer=data_writer)
     ### Genera las listas mínimas y máximas de tiempo en base a la simulación 
-    x_low, x_high = lights_function.get_min_max(0, 150, 0, 5)
+    x_low, x_high = lights_function.get_min_max(0, 150, 0, 5)   # Min verde/rojo, Max verde/rojo, Min amarillo, Max amarillo
 
     ### Correr y optimizar la simulación en base a los 3 algoritmos
     data_writer.change_file('random')
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    time = "0.0 0.01"   # <--- Tiempo de Inicio y fin en formato de horas.minutos
+    time = "0.0 0101"   # <--- Tiempo de Inicio y fin en formato de horas.minutos
     network = "./assets/network.net.xml"    # <---Directorio de la red
     in_traffic = TrafficDemand.read_csv('./assets/entrada.csv') # <--- archivo csv con lista de entrada
     out_traffic = TrafficDemand.read_csv('./assets/salida.csv') # <--- archivo csv con lista de salida

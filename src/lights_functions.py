@@ -74,4 +74,7 @@ class LightsFunctions:
 
     @staticmethod
     def get_metrics_function(data):
-        return 1 - (data["arrived_number"] / data["expected_traffic"]) if data["expected_traffic"] > 0 else 10**10
+        # 0 a 100
+        
+        
+        return 1 - (data["arrived_number"] / data["expected_traffic"])*100 if data["expected_traffic"] > 0 else 10**10
