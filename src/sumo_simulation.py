@@ -86,7 +86,7 @@ class SumoSimulation:
         if self.step.value < SimulationState.CAN_START.value:
             return
 
-        cmd = ["sumo-gui" if visual else "sumo", "-c", self.sumo_configuration]
+        cmd = ["sumo-gui" if visual else "sumo", "-c", self.sumo_configuration, "--no-warnings"]
         traci.start(cmd)
         self.step = SimulationState.CAN_RUN
 

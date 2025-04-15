@@ -1,6 +1,7 @@
 import traci
 from sumo_simulation import SumoSimulation
 from data_writer import DataWriter
+from parameters import SIMULATION_TIME
 
 
 class LightsFunctions:
@@ -17,6 +18,45 @@ class LightsFunctions:
         SUMO.start_simulation(False)
         self.get_ligths_phases(SUMO)
         SUMO.end_simulation()
+    ### Escribir la formula para f(x) en este sitio, argumentos que tienen en data[]
+    # arrived_number <-- Número de carros que salieron de la simulación
+    # departed_number <-- Número de carros que entraron a la simulación
+    # expected_traffic <-- Número de carros que se espera que se generen (total)
+    # average_speed <-- Velocidad promedio
+    # average_wait_time <-- Tiempo de espera promedio
+    # average_travel_time <-- Promedio de viaje de los carros que salieron de la simulación
+
+    @staticmethod
+    def get_metrics_function(data):
+        expected = data["expected_traffic"]
+        
+        if expected <= 0:
+            return 10**10
+
+        weights = {
+            'arrival': 0.40,
+            'speed': 0.25,
+            'wait': 0.20,
+            'travel': 0.15
+        }
+
+        # 1. Eficiencia de llegada
+        arrival_penalty = (1 - data["arrived_number"]/expected) * weights['arrival']
+
+        # 2. Velocidad promedio - Meta: 40 km/h (Ajustar después, pero yo creo que sí jalan 40km/h)
+        speed_penalty = max(0, (40 - data["average_speed"])/40) * weights['speed']
+
+        # 3. Tiempo de espera - Normalizado a 20% del tiempo total de simulación
+        max_acceptable_wait = 0.2 * SIMULATION_TIME
+        wait_penalty = (data["average_wait_time"]/max_acceptable_wait) * weights['wait']
+
+        # 4. Tiempo de viaje - Relativo al tiempo total de simulación
+        travel_penalty = (data["average_travel_time"]/SIMULATION_TIME) * weights['travel']
+
+        # (0 = PERFECTO)
+        total_score = (arrival_penalty + speed_penalty + wait_penalty + travel_penalty) * 100
+
+        return total_score if total_score > 0 else 10**10
 
     def get_ligths_phases(self, simulation: SumoSimulation):
         simulation.run_simulation(0)
@@ -62,19 +102,3 @@ class LightsFunctions:
             self.data_writer.add_data(data)
 
         return y
-
-
-    ### Escribir la formula para f(x) en este sitio, argumentos que tienen en data[]
-    # arrived_number <-- Número de carros que salieron de la simulación
-    # departed_number <-- Número de carros que entraron a la simulación
-    # expected_traffic <-- Número de carros que se espera que se generen (total)
-    # average_speed <-- Velocidad promedio
-    # average_wait_time <-- Tiempo de espera promedio
-    # average_travel_time <-- Promedio de viaje de los carros que salieron de la simulación
-
-    @staticmethod
-    def get_metrics_function(data):
-        # 0 a 100
-        
-        
-        return 1 - (data["arrived_number"] / data["expected_traffic"])*100 if data["expected_traffic"] > 0 else 10**10

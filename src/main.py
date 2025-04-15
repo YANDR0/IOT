@@ -3,10 +3,8 @@ from lights_functions import LightsFunctions
 from traffic_demand import TrafficDemand
 from optimization import random_simulation, hill_simulation, swarm_simulation, genetic_simulation
 from data_writer import DataWriter
+from parameters import *
 import os
-from time import sleep
-
-STEPS = 200
 
 ### Red, Entrada de tráfico, Salida de tráfico y tiempo
 def generate_files(net, in_d, out_d, time):
@@ -39,7 +37,12 @@ def optimice_trafficlights(config, cars, data = None) -> None:
     ### Encargado de manejar la simulación y devolver resultados
     lights_function = LightsFunctions(config, cars, steps=STEPS, data_writer=data_writer)
     ### Genera las listas mínimas y máximas de tiempo en base a la simulación 
-    x_low, x_high = lights_function.get_min_max(0, 150, 0, 5)   # Min verde/rojo, Max verde/rojo, Min amarillo, Max amarillo
+    x_low, x_high = lights_function.get_min_max(
+        GEEEN_RED_MIN_TIME_SECONDS,
+        GREEN_RED_MAX_TIME_SECONDS,
+        YELLO_MIN_TIME_SECONDS,
+        YELLOW_MAX_TIME_SECONDS
+    )   # Min verde/rojo, Max verde/rojo, Min amarillo, Max amarillo
 
     ### Correr y optimizar la simulación en base a los 3 algoritmos
     data_writer.change_file('random')
@@ -98,12 +101,13 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    time = "0.0 0101"   # <--- Tiempo de Inicio y fin en formato de horas.minutos
-    network = "./assets/network.net.xml"    # <---Directorio de la red
+    time = f"{START_TIME} {END_TIME}"   # <--- Tiempo de Inicio y fin en formato de horas.minutos
+    network = "./assets/mapachido.net.xml"    # <---Directorio de la red
     in_traffic = TrafficDemand.read_csv('./assets/entrada.csv') # <--- archivo csv con lista de entrada
     out_traffic = TrafficDemand.read_csv('./assets/salida.csv') # <--- archivo csv con lista de salida
     configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
-    #test_simulation(configuration, 100)
+    #test_simulation(configuration, 60*30)
+
     cars = sum(in_traffic.values())
     optimice_trafficlights(configuration, cars)
     data = check_data()
