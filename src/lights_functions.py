@@ -34,20 +34,20 @@ class LightsFunctions:
             return 10**10
 
         weights = {
-            'arrival': 0.40,
-            'speed': 0.25,
+            'arrival': 0.50,
+            'speed': 0.20,
             'wait': 0.20,
-            'travel': 0.15
+            'travel': 0.10
         }
 
         # 1. Eficiencia de llegada
         arrival_penalty = (1 - data["arrived_number"]/expected) * weights['arrival']
 
-        # 2. Velocidad promedio - Meta: 40 km/h (Ajustar después, pero yo creo que sí jalan 40km/h)
-        speed_penalty = max(0, (40 - data["average_speed"])/40) * weights['speed']
+        # 2. Velocidad promedio - Meta: 10 km/h (Ajustar después, pero yo creo que sí jalan 10km/h)
+        speed_penalty = max(0, (10 - data["average_speed"])/10) * weights['speed']
 
-        # 3. Tiempo de espera - Normalizado a 20% del tiempo total de simulación
-        max_acceptable_wait = 0.2 * SIMULATION_TIME
+        # 3. Tiempo de espera - Normalizado a 40% del tiempo total de simulación
+        max_acceptable_wait = 0.4 * SIMULATION_TIME
         wait_penalty = (data["average_wait_time"]/max_acceptable_wait) * weights['wait']
 
         # 4. Tiempo de viaje - Relativo al tiempo total de simulación
