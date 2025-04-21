@@ -102,3 +102,24 @@ class LightsFunctions:
             self.data_writer.add_data(data)
 
         return y
+    
+    def no_lights(self, visual = False):
+        SUMO = SumoSimulation(self.file)
+        SUMO.start_simulation(visual)
+        if(not self.lights):
+            return None
+
+        data = SUMO.run_simulation(self.simulation_steps)
+        SUMO.end_simulation()
+
+        data["expected_traffic"] = self.cars
+        y = LightsFunctions.get_metrics_function(data)
+        
+        if(self.data_writer): 
+            print(self.lights)
+            #data["x"] = x
+            data["y"] = y
+            self.data_writer.add_data(data)
+
+        return y
+

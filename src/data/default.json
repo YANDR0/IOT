@@ -1,1 +1,1 @@
-{"best": null, "data": []}
+{"best": {"arrived_number": 622, "departed_number": 1246, "average_speed": 1.8207367762955713, "average_wait_time": 644.7327447833065, "average_travel_time": 898.9067524115756, "expected_traffic": 8798, "y": 85.72680146618504}, "data": [{"arrived_number": 622, "departed_number": 1246, "average_speed": 1.8207367762955713, "average_wait_time": 644.7327447833065, "average_travel_time": 898.9067524115756, "expected_traffic": 8798, "y": 85.72680146618504}]}

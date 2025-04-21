@@ -45,6 +45,7 @@ def optimice_trafficlights(config, cars, data = None) -> None:
     )   # Min verde/rojo, Max verde/rojo, Min amarillo, Max amarillo
 
     ### Correr y optimizar la simulación en base a los 3 algoritmos
+    lights_function.no_lights()
     data_writer.change_file('random')
     random_simulation(lights_function.all_lights, x_low, x_high, 20, data["random"] if data else None)
     data_writer.change_file('hill')
