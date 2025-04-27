@@ -1,7 +1,7 @@
 from sumo_simulation import SumoSimulation
 from lights_functions import LightsFunctions
 from traffic_demand import TrafficDemand
-from optimization import random_simulation, hill_simulation, swarm_simulation, genetic_simulation
+from optimization_multicore import random_simulation, hill_simulation, swarm_simulation, genetic_simulation
 from data_writer import DataWriter
 from parameters import *
 import os
@@ -44,16 +44,28 @@ def optimice_trafficlights(config, cars, data = None) -> None:
         YELLOW_MAX_TIME_SECONDS
     )   # Min verde/rojo, Max verde/rojo, Min amarillo, Max amarillo
 
-    ### Correr y optimizar la simulación en base a los 3 algoritmos
-    lights_function.no_lights()
-    data_writer.change_file('random')
-    random_simulation(lights_function.all_lights, x_low, x_high, 20, data["random"] if data else None)
-    data_writer.change_file('hill')
-    hill_simulation(lights_function.all_lights, x_low, x_high, 20, data["hill"] if data else None)
-    data_writer.change_file('swarm')
-    swarm_simulation(lights_function.all_lights, x_low, x_high, 2, 10, data["swarm"] if data else None)
-    data_writer.change_file('genetic')
-    genetic_simulation(lights_function.all_lights, x_low, x_high, 2, 10, -5, 105)
+    ### Correr y optimizar la simulación en base a los algoritmos
+    """
+    print("RANDOM...")
+    data_writer.change_file('random-p')
+    x_random, y_random, random_data = random_simulation(lights_function.all_lights, x_low, x_high, 2, data["random"] if data else None)
+    for d in random_data:
+        data_writer.add_data(d)
+    
+    print("HILL...")
+    data_writer.change_file('hill-p')
+    hill_simulation(lights_function.all_lights, x_low, x_high, 2, data["hill"] if data else None)
+    
+    print("SWARM...")
+    data_writer.change_file('swarm-p')
+    swarm_simulation(lights_function.all_lights, x_low, x_high, 1, 2, data["swarm"] if data else None)
+    """
+    print("GENETIC...")
+    data_writer.change_file('genetic-p')
+    x_genetic, y_genetic, genetic_data = genetic_simulation(lights_function.all_lights, x_low, x_high, 125, 16, -5, 105, cores=10)
+    for d in genetic_data:
+        data_writer.add_data(d)
+
     data_writer.write_file()
 
 # Extrae las mejores configuraciones de los archivos y los devuelve como diccionario 
@@ -112,7 +124,7 @@ if __name__ == "__main__":
     cars = sum(in_traffic.values())
     optimice_trafficlights(configuration, cars)
     data = check_data()
-    show_cases(configuration, data)
+    #show_cases(configuration, data)
 
 
 
