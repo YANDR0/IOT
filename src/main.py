@@ -45,15 +45,15 @@ def optimice_trafficlights(config, cars, data = None) -> None:
     )   # Min verde/rojo, Max verde/rojo, Min amarillo, Max amarillo
 
     ### Correr y optimizar la simulación en base a los 3 algoritmos
-    lights_function.no_lights()
-    data_writer.change_file('random')
-    random_simulation(lights_function.all_lights, x_low, x_high, 20, data["random"] if data else None)
-    data_writer.change_file('hill')
-    hill_simulation(lights_function.all_lights, x_low, x_high, 20, data["hill"] if data else None)
-    data_writer.change_file('swarm')
-    swarm_simulation(lights_function.all_lights, x_low, x_high, 2, 10, data["swarm"] if data else None)
-    data_writer.change_file('genetic')
-    genetic_simulation(lights_function.all_lights, x_low, x_high, 2, 10, -5, 105)
+    #lights_function.no_lights()
+    #data_writer.change_file('random')
+    #random_simulation(lights_function.all_lights, x_low, x_high, 20, data["random"] if data else None)
+    #data_writer.change_file('hill')
+    #hill_simulation(lights_function.all_lights, x_low, x_high, 20, data["hill"] if data else None)
+    #data_writer.change_file('swarm')
+    #swarm_simulation(lights_function.all_lights, x_low, x_high, 2, 10, data["swarm"] if data else None)
+    data_writer.change_file('genetic-1200')
+    genetic_simulation(lights_function.all_lights, x_low, x_high, 100, 12, -5, 105)
     data_writer.write_file()
 
 # Extrae las mejores configuraciones de los archivos y los devuelve como diccionario 
@@ -111,8 +111,8 @@ if __name__ == "__main__":
 
     cars = sum(in_traffic.values())
     optimice_trafficlights(configuration, cars)
-    data = check_data()
-    show_cases(configuration, data)
+    #data = check_data()
+    #show_cases(configuration, data)
 
 
 

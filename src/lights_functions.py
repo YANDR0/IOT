@@ -116,7 +116,6 @@ class LightsFunctions:
         y = LightsFunctions.get_metrics_function(data)
         
         if(self.data_writer): 
-            print(self.lights)
             #data["x"] = x
             data["y"] = y
             self.data_writer.add_data(data)
