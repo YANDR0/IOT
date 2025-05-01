@@ -1,7 +1,8 @@
 from math import cos, pi, e
 from random import random, uniform, randint
 from time import time
-import copy, functools
+import copy
+import functools
 
 
 ### Test functions ###
