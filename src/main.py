@@ -77,12 +77,12 @@ def optimice_trafficlights(config, cars, data=None) -> None:
     """
 
     print("HILL...")
-    data_writer.change_file('hill-p')
-    hill_simulation(lights_function.all_lights, x_low, x_high, 2, data["hill"] if data else None)
+    data_writer.change_file('hill')
+    hill_simulation(lights_function.all_lights, x_low, x_high, 500, data["hill"] if data else None)
     
     print("PSO...")
-    data_writer.change_file('swarm-p')
-    swarm_simulation(lights_function.all_lights, x_low, x_high, 1, 2, data["swarm"] if data else None)
+    data_writer.change_file('swarm')
+    swarm_simulation(lights_function.all_lights, x_low, x_high, 100, 10, data["swarm"] if data else None)
 
     print("SA...")
     data_writer.change_file("sa")
@@ -91,7 +91,6 @@ def optimice_trafficlights(config, cars, data=None) -> None:
         data_writer.add_data(d)
 
     data_writer.write_file()
-
 
 
 # Extrae las mejores configuraciones de los archivos y los devuelve como diccionario
