@@ -67,12 +67,15 @@ def optimice_trafficlights(config, cars, data=None) -> None:
 
     ### Correr y optimizar la simulación en base a los algoritmos
     """
-    print("RANDOM...")
-    data_writer.change_file('random-p')
-    _, _, random_data = random_simulation(lights_function.all_lights, x_low, x_high, 2, data["random"] if data else None)
-    for d in random_data:
+    print("GENETIC...")
+    data_writer.change_file("genetic-p")
+    _, _, genetic_data = genetic_simulation(
+        lights_function.all_lights, x_low, x_high, 200, 50, -5, 105, cores=16
+    )
+    for d in genetic_data:
         data_writer.add_data(d)
-    
+    """
+
     print("HILL...")
     data_writer.change_file('hill-p')
     hill_simulation(lights_function.all_lights, x_low, x_high, 2, data["hill"] if data else None)
@@ -80,23 +83,15 @@ def optimice_trafficlights(config, cars, data=None) -> None:
     print("PSO...")
     data_writer.change_file('swarm-p')
     swarm_simulation(lights_function.all_lights, x_low, x_high, 1, 2, data["swarm"] if data else None)
-    
-    print("GENETIC...")
-    data_writer.change_file("genetic-p")
-    _, _, genetic_data = genetic_simulation(
-        lights_function.all_lights, x_low, x_high, 125, 16, -5, 105, cores=10
-    )
-    for d in genetic_data:
-        data_writer.add_data(d)
-    """
 
     print("SA...")
     data_writer.change_file("sa")
-    _, _, sa_data = tsp_sa(lights_function.all_lights, x_low, x_high, max_iter=100)
+    _, _, sa_data = tsp_sa(lights_function.all_lights, x_low, x_high, max_iter=700, cores=2)
     for d in sa_data:
         data_writer.add_data(d)
 
     data_writer.write_file()
+
 
 
 # Extrae las mejores configuraciones de los archivos y los devuelve como diccionario
@@ -146,14 +141,16 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    #time = f"{START_TIME} {END_TIME}"  # <--- Tiempo de Inicio y fin en formato de horas.minutos
-    #network = "./assets/mapachido.net.xml"  # <---Directorio de la red
+    time = f"{START_TIME} {END_TIME}"  # <--- Tiempo de Inicio y fin en formato de horas.minutos
+    network = "./assets/mapachido.net.xml"  # <---Directorio de la red
     in_traffic = TrafficDemand.read_csv("./assets/entrada.csv")  # <--- archivo csv con lista de entrada
     out_traffic = TrafficDemand.read_csv("./assets/salida.csv")  # <--- archivo csv con lista de salida
-    #configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
+    configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
 
+    """
     input_cars = sum(in_traffic.values())
     output_cars = sum(out_traffic.values())
     cars = max(input_cars, output_cars)
     optimice_trafficlights('./assets/simulation.sumocfg', cars)
     #data = check_data()
+    """
