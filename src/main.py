@@ -78,11 +78,11 @@ def optimice_trafficlights(config, cars, data=None) -> None:
 
     print("HILL...")
     data_writer.change_file('hill-p')
-    hill_simulation(lights_function.all_lights, x_low, x_high, 2, data["hill"] if data else None)
+    hill_simulation(lights_function.all_lights, x_low, x_high, 500, data["hill"] if data else None)
     
     print("PSO...")
     data_writer.change_file('swarm-p')
-    swarm_simulation(lights_function.all_lights, x_low, x_high, 1, 2, data["swarm"] if data else None)
+    swarm_simulation(lights_function.all_lights, x_low, x_high, 10, 100, data["swarm"] if data else None)
 
     print("SA...")
     data_writer.change_file("sa")
