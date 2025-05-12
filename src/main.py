@@ -145,12 +145,11 @@ if __name__ == "__main__":
     network = "./assets/mapachido.net.xml"  # <---Directorio de la red
     in_traffic = TrafficDemand.read_csv("./assets/entrada.csv")  # <--- archivo csv con lista de entrada
     out_traffic = TrafficDemand.read_csv("./assets/salida.csv")  # <--- archivo csv con lista de salida
-    configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
+    #configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
 
-    """
+    
     input_cars = sum(in_traffic.values())
     output_cars = sum(out_traffic.values())
     cars = max(input_cars, output_cars)
     optimice_trafficlights('./assets/simulation.sumocfg', cars)
     #data = check_data()
-    """
