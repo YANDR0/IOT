@@ -82,7 +82,7 @@ def optimice_trafficlights(config, cars, data=None) -> None:
     
     print("PSO...")
     data_writer.change_file('swarm')
-    swarm_simulation(lights_function.all_lights, x_low, x_high, 100, 10, data["swarm"] if data else None)
+    swarm_simulation(lights_function.all_lights, x_low, x_high, 10, 100, data["swarm"] if data else None)
 
     print("SA...")
     data_writer.change_file("sa")
