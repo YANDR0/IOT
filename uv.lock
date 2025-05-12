@@ -1,35 +1,68 @@
 version = 1
-revision = 2
+revision = 1
 requires-python = ">=3.13"
+
+[[package]]
+name = "eclipse-sumo"
+version = "1.23.1"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1a/80/a3dfecd5a3c0ed5668e1cf7ab5f7d979d75fb7b53f293d2407dba1264fa2/eclipse_sumo-1.23.1-py2.py3-none-macosx_15_0_arm64.whl", hash = "sha256:ccc1b9c7e628515877c6ec996f5503f664a3f6716125a50b7af707944c257f27", size = 65570985 },
+    { url = "https://files.pythonhosted.org/packages/7c/00/9ed9fb7e4fcbcd4c64c44ed0c634e832dc51e0b9a0204a7ed6f19dbe55fd/eclipse_sumo-1.23.1-py2.py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cb96ac2bc85f6f057e55447069921dc94cfab23eaf6169bf5e25150d0ccc0a59", size = 89582966 },
+    { url = "https://files.pythonhosted.org/packages/b2/f5/2c8aef821c0602650e16aca85a081ee538d3c37dd74bc2cc0ed7913ec133/eclipse_sumo-1.23.1-py2.py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e439c1bb04e4781b7f1c7c9b2871c8912ba722ab04d8e0595682fdf6db08fef2", size = 92664194 },
+    { url = "https://files.pythonhosted.org/packages/69/3a/fad37a4ac5da00d37dea874f46f1947e0dc1de014c39009ec1b8180ca256/eclipse_sumo-1.23.1-py2.py3-none-win_amd64.whl", hash = "sha256:d9d3f8dab22f94c2c3e29e30e24b927a817707a2150e589eff7d1a6ffa9a92e6", size = 156941945 },
+]
 
 [[package]]
 name = "iot"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "eclipse-sumo" },
+    { name = "libsumo" },
+    { name = "sumolib" },
     { name = "traci" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "traci", specifier = ">=1.22.0" }]
+requires-dist = [
+    { name = "eclipse-sumo", specifier = ">=1.23.1" },
+    { name = "libsumo", specifier = ">=1.23.1" },
+    { name = "sumolib", specifier = ">=1.23.1" },
+    { name = "traci", specifier = ">=1.22.0" },
+]
+
+[[package]]
+name = "libsumo"
+version = "1.23.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "eclipse-sumo" },
+    { name = "traci" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d2/1c/23f5cd52f5c8127cb16d950c1c93d0eb3fd97b037029842f577c6a59a0fa/libsumo-1.23.1-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d1845ac923518446267b3727bc2e4a75e84b78e505100b0e3e40210a4c2f6285", size = 25118602 },
+    { url = "https://files.pythonhosted.org/packages/fb/1b/e7c3689b03a022b878001387e09019da0aaf4ffa50888a98818c12a75e00/libsumo-1.23.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2b2b54d0c0ab7f165a3d4df554d72516cdeb9e8004c2a3a3ba61ef6cb30b2757", size = 26212926 },
+    { url = "https://files.pythonhosted.org/packages/55/98/5f42ca361b977a595e1e2f5e8c0a1cbc01ffc46f03a197cc86b29e24778d/libsumo-1.23.1-cp313-cp313-win_amd64.whl", hash = "sha256:560d14dc63a25b7d8873e5e2a42fa3c665cd736b9a6eff07228faff26e9ae333", size = 4490310 },
+    { url = "https://files.pythonhosted.org/packages/f6/57/d0feaa904143e0db14b747cf93636e1503dc34f3b83dff5d8a66998c1e1c/libsumo-1.23.1-cp313-cp313t-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6ba964e5d8a76e4d425d46af944f4ccf04b005bafe6ae26d92536bf6c70c2da0", size = 25098481 },
+    { url = "https://files.pythonhosted.org/packages/29/12/e467666a7e0ee673aec8e58ba465d91f70dee27cda05f3a25402c122251e/libsumo-1.23.1-cp313-cp313t-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0ab0377e0972adcbfc164b76ea42870633e838ff194392dbcee494433a5303cb", size = 26181939 },
+]
 
 [[package]]
 name = "sumolib"
-version = "1.22.0"
+version = "1.23.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d7/6f/efae14870acce20d7cab4171fde1378a1df3d8379307e02b4dde4a6922db/sumolib-1.22.0.tar.gz", hash = "sha256:55f5578bea6c9dd960790f8e89c87913f23514111472feac1d747bd0d891013e", size = 93643, upload-time = "2025-02-05T09:26:35.191Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6a/bf/686c7577d9baaaec105ed75e7a245b79c7640cef570075f643a64dd80ae6/sumolib-1.22.0-py3-none-any.whl", hash = "sha256:22a1b0ecdaf2fa6a99df8ce0dfff50fbe56fd571002db70f5d2a1feb6b8a6d2c", size = 150909, upload-time = "2025-02-05T09:26:31.484Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/50/3ee7a742e7e27b87f67cfd05519f9acc2e86182b6d385fc07c41005f39eb/sumolib-1.23.1-py3-none-any.whl", hash = "sha256:63589c41079dbdb1acb389478694f47302f4990e156c056ad686ba2d01efe7f0", size = 276981 },
 ]
 
 [[package]]
 name = "traci"
-version = "1.22.0"
+version = "1.23.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "sumolib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fa/98/fec9616a11d66b2f516affec513035d657ea0b44c8a6060b3b4d10c01181/traci-1.22.0.tar.gz", hash = "sha256:ed5651b7e58bde3ed086ced8e5dc5cc8fb5dd5f951cf3b0d10a635678a7718f1", size = 94596, upload-time = "2025-02-05T09:26:37.017Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/39/37/385dc7473230e0ef3a43d5437e1d727ebdf8a8cc500791becae87f533e2b/traci-1.22.0-py3-none-any.whl", hash = "sha256:7d18009eb45bc56409a0edf7c5e5bae477a72c5d022d0da0739f611dcf9bba77", size = 126362, upload-time = "2025-02-05T09:26:33.112Z" },
+    { url = "https://files.pythonhosted.org/packages/bd/46/ac1c760c0ee183a316d3c1c33fb20c64b56621abafd00db99af48b96ee54/traci-1.23.1-py3-none-any.whl", hash = "sha256:79a62bdc67fb437d3bf08a730f3673bbe77435f0b36e0ff4b3111545a9d371bb", size = 277219 },
 ]
