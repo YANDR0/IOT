@@ -64,34 +64,32 @@ def optimice_trafficlights(config, cars, data=None) -> None:
         YELLO_MIN_TIME_SECONDS,
         YELLOW_MAX_TIME_SECONDS,
     )  # Min verde/rojo, Max verde/rojo, Min amarillo, Max amarillo
+    lights_function.no_lights()
+    ### Correr y optimizar la simulación en base a los algoritmos    
 
-    ### Correr y optimizar la simulación en base a los algoritmos
-    """
     print("GENETIC...")
     data_writer.change_file("genetic-p")
     _, _, genetic_data = genetic_simulation(
-        lights_function.all_lights, x_low, x_high, 200, 50, -5, 105, cores=16
+        lights_function.all_lights, x_low, x_high, 200, 50, -5, 105, cores=7
     )
     for d in genetic_data:
         data_writer.add_data(d)
-    """
-
-    print("HILL...")
-    data_writer.change_file('hill-p')
-    hill_simulation(lights_function.all_lights, x_low, x_high, 500, data["hill"] if data else None)
-    
-    print("PSO...")
-    data_writer.change_file('swarm-p')
-    swarm_simulation(lights_function.all_lights, x_low, x_high, 10, 100, data["swarm"] if data else None)
 
     print("SA...")
     data_writer.change_file("sa")
-    _, _, sa_data = tsp_sa(lights_function.all_lights, x_low, x_high, max_iter=700, cores=2)
+    _, _, sa_data = tsp_sa(lights_function.all_lights, x_low, x_high, max_iter=500, cores=2, num_runs=2)
     for d in sa_data:
         data_writer.add_data(d)
 
-    data_writer.write_file()
+    print("HILL...")
+    data_writer.change_file('hill')
+    hill_simulation(lights_function.all_lights, x_low, x_high, 500, data["hill"] if data else None)
+    
+    print("PSO...")
+    data_writer.change_file('swarm')
+    swarm_simulation(lights_function.all_lights, x_low, x_high, 10, 100, data["swarm"] if data else None)
 
+    data_writer.write_file()
 
 
 # Extrae las mejores configuraciones de los archivos y los devuelve como diccionario
@@ -148,8 +146,11 @@ if __name__ == "__main__":
     #configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
 
     
+    #configuration = generate_files(network, in_traffic, out_traffic, time)  # Se hace automático
+    
     input_cars = sum(in_traffic.values())
     output_cars = sum(out_traffic.values())
     cars = max(input_cars, output_cars)
     optimice_trafficlights('./assets/simulation.sumocfg', cars)
     #data = check_data()
+
