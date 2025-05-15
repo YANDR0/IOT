@@ -115,8 +115,8 @@ Below are examples of how to use the project's functions and modules.
 ### 1. Generating Configuration Files
 
 ```python
-from src.main import generate_files
-from src.traffic_demand import TrafficDemand
+from main import generate_files
+from traffic_demand import TrafficDemand
 
 in_d = TrafficDemand.read_csv("./assets/entrada.csv")
 out_d = TrafficDemand.read_csv("./assets/salida.csv")
@@ -127,7 +127,7 @@ config = generate_files("./assets/map.net.xml", in_d, out_d, time_window)
 ### 2. Running a Test Simulation
 
 ```python
-from src.sumo_simulation import SumoSimulation
+from sumo_simulation import SumoSimulation
 
 sumo = SumoSimulation(config)
 sumo.start_simulation(False)
@@ -139,9 +139,9 @@ print(result)
 ### 3. Simulated Annealing Optimization
 
 ```python
-from src.data_writer import DataWriter
-from src.lights_functions import LightsFunctions
-from src.optimization.simmulated_annealing import tsp_sa
+from data_writer import DataWriter
+from lights_functions import LightsFunctions
+from optimization.simmulated_annealing import tsp_sa
 
 # Setup
 data_writer = DataWriter('sa', 'data')
@@ -158,15 +158,15 @@ data_writer.write_file()
 ### 4. Random Search Optimization
 
 ```python
-from src.data_writer import DataWriter
-from src.lights_functions import LightsFunctions
-from src.optimization.random import random_simulation
+from data_writer import DataWriter
+from lights_functions import LightsFunctions
+from optimization.random import random_simulation
 
 writer = DataWriter('random', 'data')
 lf = LightsFunctions(config, cars, steps=100, data_writer=writer)
 x_low, x_high = lf.get_min_max(10, 60, 3, 6)
 _, _, random_results = random_simulation(
-    lf.all_lights, x_low, x_high, iterations=50
+    lf.all_lights, x_low, x_high, n=50 cores=8
 )
 for entry in random_results:
     writer.add_data(entry)
@@ -176,37 +176,37 @@ writer.write_file()
 ### 5. Hill Climbing Optimization
 
 ```python
-from src.data_writer import DataWriter
-from src.lights_functions import LightsFunctions
-from src.optimization.hill_climbing import hill_simulation
+from data_writer import DataWriter
+from lights_functions import LightsFunctions
+from optimization.hill_climbing import hill_simulation
 
 writer = DataWriter('hill', 'data')
 lf = LightsFunctions(config, cars, steps=100, data_writer=writer)
 x_low, x_high = lf.get_min_max(10, 60, 3, 6)
-hill_simulation(lf.all_lights, x_low, x_high, max_iter=100)
+hill_simulation(lf.all_lights, x_low, x_high, n=100)
 ```
 
 ### 6. Particle Swarm Optimization
 
 ```python
-from src.data_writer import DataWriter
-from src.lights_functions import LightsFunctions
-from src.optimization.pso import swarm_simulation
+from data_writer import DataWriter
+from lights_functions import LightsFunctions
+from optimization.pso import swarm_simulation
 
 writer = DataWriter('swarm', 'data')
 lf = LightsFunctions(config, cars, steps=100, data_writer=writer)
 x_low, x_high = lf.get_min_max(10, 60, 3, 6)
 swarm_simulation(
-    lf.all_lights, x_low, x_high, swarm_size=20, max_iter=100
+    lf.all_lights, x_low, x_high, m=20, n=100
 )
 ```
 
 ### 7. Genetic Algorithm Optimization
 
 ```python
-from src.data_writer import DataWriter
-from src.lights_functions import LightsFunctions
-from src.optimization.genetic import genetic_simulation
+from data_writer import DataWriter
+from lights_functions import LightsFunctions
+from optimization.genetic import genetic_simulation
 
 writer = DataWriter('genetic', 'data')
 lf = LightsFunctions(config, cars, steps=100, data_writer=writer)
@@ -226,8 +226,8 @@ writer.write_file()
 ### 8. Visualizing Optimized Cases
 
 ```python
-from src.lights_functions import LightsFunctions
-from src.data_writer import DataWriter
+from lights_functions import LightsFunctions
+from data_writer import DataWriter
 
 # Read best configuration from JSON
 writer = DataWriter('sa', 'data')
