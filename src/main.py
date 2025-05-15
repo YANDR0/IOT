@@ -113,26 +113,33 @@ def check_data():
     data_writer.read_file()
     data["genetic"] = data_writer.best
 
+    data_writer.change_file("sa")
+    data_writer.read_file()
+    data["sa"] = data_writer.best
+
     return data
 
 
 # En base a las mejores configuraciones, corre visualmente cada una de estas
-def show_cases(config, data):
-    simulation = LightsFunctions(config, 200)
+def show_cases(config, cars, data):
+    simulation = LightsFunctions(config, cars, steps=STEPS)
 
-    test_simulation(config, 200)
+    test_simulation(config, steps=STEPS)
 
-    print("random")
-    simulation.all_lights(data["random"]["x"], True)
+    #print("random")
+    #simulation.all_lights(data["random"]["x"], True)
 
-    print("hill")
-    simulation.all_lights(data["hill"]["x"], True)
+    #print("hill")
+    #simulation.all_lights(data["hill"]["x"], True)
 
-    print("swarm")
-    simulation.all_lights(data["swarm"]["x"], True)
+    #print("swarm")
+    #simulation.all_lights(data["swarm"]["x"], True)
 
     print("genetic")
     simulation.all_lights(data["genetic"]["x"], True)
+
+    print("sa")
+    simulation.all_lights(data["sa"]["x"], True)
 
 
 if __name__ == "__main__":
@@ -151,6 +158,7 @@ if __name__ == "__main__":
     input_cars = sum(in_traffic.values())
     output_cars = sum(out_traffic.values())
     cars = max(input_cars, output_cars)
-    optimice_trafficlights('./assets/simulation.sumocfg', cars)
-    #data = check_data()
-
+    #optimice_trafficlights('./assets/simulation.sumocfg', cars)
+    
+    data = check_data()
+    show_cases('./assets/simulation.sumocfg', cars, data)
