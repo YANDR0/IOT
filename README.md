@@ -7,6 +7,11 @@ Index
 * [Installation and Setup](#installation-and-setup)
 * [Usage Examples](#usage-examples)
 
+Presented by:
+- Yael Alejandro Rodriguez Barreto
+- Ximena Isaac Horta
+- Alberto Renteria Camacho
+
 ## General Description
 
 This project provides a modular platform for simulating and optimizing traffic signal control in urban traffic networks using SUMO and TraCI. It employs bio-inspired algorithms (Random Search, Hill Climbing, Particle Swarm Optimization, Simulated Annealing, and Genetic Algorithms) to adjust traffic light phase durations, aiming to improve metrics such as vehicle throughput, average speed, and wait time. Results are stored in JSON files for subsequent analysis and comparison.
