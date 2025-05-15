@@ -1,4 +1,4 @@
-# SUMO Traffic Simulation Framework Documentation
+# SUMO Traffic Simulation System Documentation
 
 ## Table of Contents
 1. [Introduction](#introduction)
